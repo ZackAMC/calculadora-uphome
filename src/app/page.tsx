@@ -149,9 +149,10 @@ export default function Home() {
     // Verificación de campos
 
     setValiCamp1(idVendedor == 0);
+    setValiCamp2(paneles < 10 || paneles == null);
     setValiCamp3(bateria == "");
 
-    if (!valiCamp1 && !valiCamp3 && idVendedor != 0 && bateria != "") {
+    if (!valiCamp1 && !valiCamp2 && !valiCamp3 && idVendedor != 0 && bateria != "" && (paneles < 10 || paneles == null) ) {
       
       
       if (divRef.current) {
