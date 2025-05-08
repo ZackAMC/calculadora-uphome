@@ -1,29 +1,67 @@
 'use client'
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { rangos } from "@/app/data/ranks";
 import Image from 'next/image'
 import logoColor from "@/app/img/logoC.png";
-
+import logoBlanco from "@/app/img/logoB.png";
 
 export default function Home() {
 
-  const [idVendedor, setIdVendedor] = useState<string>("")
-  const [paneles, setPaneles] = useState<number>(10)
-  const [bateria, setBateria] = useState<string>("")
-  const [cantBateria, setCantBateria] = useState<number>(0)
-  const [catnBatBloq, setCatnBatBloq] = useState<boolean>(false)
-  const [listOpciones, setListOpciones] = useState<any[]>(["1"])
-  const [adder1, setAdder1] = useState<boolean>(false)
-  const [adder2, setAdder2] = useState<boolean>(false)
-  const [valorCampo, setValorCampo] = useState<string>("")
+  const [ idVendedor, setIdVendedor ] = useState<number>(0)
+  const [ paneles, setPaneles ] = useState<number>(10)
+  const [ bateria, setBateria ] = useState<string>("")
+  const [ cantBateria, setCantBateria ] = useState<number>(1)
+  const [ catnBatBloq, setCatnBatBloq ] = useState<boolean>(false)
+  const [ listOpciones, setListOpciones ] = useState<any[]>(["1"])
+  const [ adder1, setAdder1 ] = useState<boolean>(false)
+  const [ adder2, setAdder2 ] = useState<boolean>(false)
+  const [ calcState, setCalcState ] = useState<boolean>(false)
+  const [ epcBase, setEpcBase ] = useState<number>(0)
+  const [ epcTotalBase, setEpcTotalBase ] = useState<number>(0)
+  const [ solarAjustado, setSolarAjustado ] = useState<number>(0)
+  const [ epcVendido, setEpcVendido ] = useState<number>(0)
+  const [ totalComision, setTotalComision ] = useState<number>(0)
+
+  const [ valiCamp1, setValiCamp1 ] = useState<boolean>(false)
+  const [ valiCamp2, setValiCamp2 ] = useState<boolean>(false)
+  const [ valiCamp3, setValiCamp3 ] = useState<boolean>(false)
+
+  const formRef = useRef<HTMLFormElement>(null);
+  const divRef = useRef<HTMLDivElement>(null);
+  const [altura, setAltura] = useState(0);
+
+
 
   useEffect(() => {
+    setTimeout(() => {
+      if (formRef.current) {
+        setAltura(formRef.current.offsetHeight);
+      }
+    }, 50)
+  }, []);
 
+
+  // Verificacion si la cantidad de paneles es menor a 10
+
+  useEffect(()=>{
+
+    if (paneles < 10) {
+      setPaneles(10)
+      setValiCamp2(true)
+    } else {
+      setValiCamp2(false)
+    }
+
+  },[paneles])
+
+
+
+  // Lógica de cantidad de baterias vs cantidad de paneles segun el tipo de batería
+  useEffect(() => {
 
     // Effect número de baterias
     if (bateria == "Tesla") {
-
 
       if (paneles <= 24) {
         // Obligatorio 1
@@ -69,8 +107,6 @@ export default function Home() {
       }
     }
 
-
-
     if (bateria == "Solar_Edge") {
       
       if (paneles <= 25) {
@@ -100,8 +136,7 @@ export default function Home() {
 
   }, [paneles, bateria]);
 
-
-
+  // Funcionalidad de Checkboxes
   const handleCheck1 = (e:any) => {
     setAdder1(e.target.checked)
   };
@@ -109,122 +144,286 @@ export default function Home() {
     setAdder2(e.target.checked)
   };
 
-
-  const handleClick = ()=>{
+  // Funcionalidad de botones
+  const generaCotizacion = ()=>{
     
+    // Verificación de campos
+
+    idVendedor == 0 ? setValiCamp1(true) : setValiCamp1(false)
+    bateria == "" ? setValiCamp3(true) : setValiCamp3(false)
+    
+
+    if (!valiCamp1 && !valiCamp3 && idVendedor != 0 && bateria != "") {
+      
+      
+      if (divRef.current) {
+        setAltura(divRef.current.offsetHeight);
+      }
+
+      setCalcState(true)
+
+      // Establecemos el EPC Base segun tipo de batería y cantidad de baterias
+      if (bateria == "Tesla") {
+        
+        if ( cantBateria == 1 ) {
+
+          if ( paneles >= 10 && paneles <= 12 ) {
+            setEpcBase(5.2)
+          }
+
+          if ( paneles >= 13 && paneles <= 37 ) {
+            setEpcBase(4.5)
+          }
+          
+        }
+
+        if ( cantBateria == 2 ) {
+          if ( paneles >= 25 && paneles <= 65 ) {
+            setEpcBase(4.55)
+          }
+        }
+
+        if ( cantBateria >= 3 ) {
+          setEpcBase(4.5)
+        }
+      }
+      if (bateria == "Solar_Edge") {
+        
+        if ( cantBateria == 1 ) {
+
+          if ( paneles >= 10 && paneles <= 12 ) {
+            setEpcBase(4.8)
+          }
+
+          if ( paneles >= 13 && paneles <= 37 ) {
+            setEpcBase(4.25)
+          }
+          
+        }
+
+        if ( cantBateria == 2 ) {
+          if ( paneles >= 23 && paneles <= 49 ) {
+            setEpcBase(4.3)
+          }
+          if ( paneles >= 50 ) {
+            setEpcBase(4.25)
+          }
+        }
+
+      }
+    
+
+      // Calcularmos el Size
+      setEpcTotalBase(paneles * 405)
+      setEpcVendido(0)
+      setSolarAjustado(0)
+      setTotalComision(0)
+
+    }
   }
 
-  return (
+  const calcularComision = () =>{
+
+    // solar ajustado al epc vendido
+    let baseTotal = epcVendido * epcTotalBase
+
+    baseTotal = Math.round(baseTotal)
+
+
+    if (adder1) {
+      baseTotal = baseTotal - 1000
+    }
+
+    if (adder2) {
+      baseTotal = baseTotal - 2500
+    }
+
+    if (epcVendido < epcBase) {
+      baseTotal = baseTotal - 5000
+      console.log("menor");
+      
+    }
+
+    const totalBaseDesc = baseTotal
+    setSolarAjustado(totalBaseDesc)
+
     
-    <div className="container">
-      <div className="logo">
-        <Image
-          src={logoColor}
-          width={200}
-          height={100}
-          alt="Logo Up Home Solution."
-        />
-      </div>
 
-      <div className="bloqueForm">
-        <form onSubmit={(e) => e.preventDefault()}>
-          <label>
-            <span>Rango de Vendedor</span>
 
-            <select name="tipoVendedor" onChange={(e:any) => {setIdVendedor(e.target.value)}}>
-              <option value=""></option>
-              {rangos.map((item) => (
-                <option key={item.id} value={item.id}>{item.nombre}</option>
-              ))}
-            </select>
-          </label>
 
-          <label>
-            <span>Cantidad de Paneles</span>
+    //r - % de comision = comision
 
-              <input
-                type="number"
-                name="paneles"
-                min="10"
-                max="75"
-                onChange={(e:any) => {setPaneles(e.target.value)}}
-                value={paneles}
-              />
-          </label>
 
-          <label>
-            <span>Tipo de Batería</span>
+    const rangoSelec = rangos.find(item => item.id == idVendedor)
 
-              <select name="tipoBateria" onChange={(e:any) => {setBateria(e.target.value)}}>
-                <option value=""></option>
-                <option value="Solar_Edge">S. Edge</option>
-                <option value="Tesla">Tesla</option>
-              </select>
+    if (rangoSelec && typeof rangoSelec.porcentaje === 'number') {
+      const percent = rangoSelec.porcentaje / 100;
+      setTotalComision(Math.round(totalBaseDesc * percent));
+    } else {
+      console.error('No se encontró el rango o porcentaje inválido');
+      setTotalComision(0); // o maneja el error como prefieras
+    }
+    
 
-          </label>
-              
-          <label>
-            <span>Número de Baterías</span>
-            <select
-              name="numeroBaterias"
-              onChange={(e:any) => {setCantBateria(e.target.value)}}
-              disabled={catnBatBloq}
-              value={cantBateria}
-            >
-              
-              {listOpciones.map(item=>(
-                <option value={item} key={item}>{item}</option>
-              ))}
+  }
 
-            </select>
-          </label>
+  const modificaValores = ()=>{
+    setCalcState(false)
+    if (formRef.current) {
+      setAltura(formRef.current.offsetHeight);
+    }
+  }
 
-          <div className="selectores">
-            <label>
-              <span>Adder 1</span>
-              <input
-                type="checkbox"
-                name="adder1"
-                onChange={handleCheck1}
-                checked={adder1}
-              />
-            </label> 
-            <label>
-              <span>Adder 2</span>
-              <input
-                type="checkbox"
-                name="adder2"
-                onChange={handleCheck2}
-                checked={adder2}
-              />
-            </label>
-          </div>
+  const nuevaCotiazcion = ()=>{
+    setCalcState(false)
+    setEpcVendido(0)
+    setSolarAjustado(0)
+    setTotalComision(0)
+    setPaneles(10)
+    setBateria("")
+    setCantBateria(1)
+    setAdder1(false)
+    setAdder2(false)
+    setIdVendedor(0)
+    setEpcBase(0)
+    if (formRef.current) {
+      setAltura(formRef.current.offsetHeight);
+    }
+  }
 
-        </form>
+  // verificar si es client o no
 
-        <div className="visualizador">
-              <div className="epcBase"></div>
-              <div className="totalBase"></div>
+  const [isClient, setIsClient] = useState(false);
 
-              <label>
-                <span>EPC Vemdodo</span>
-                <input type="number"  onChange={(e:any) => {setValorCampo(e.target.value)}} value={valorCampo}/>
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  return isClient ? (
+    
+    <div className={calcState ? "activo contenedor" : "contenedor"}>
+      <div className="sec">
+        <div className="logo">
+          <Image
+            src={logoColor}
+            width={200}
+            height={100}
+            alt="Logo Up Home Solution."
+            className="logoColor"
+          />
+          <Image
+            src={logoBlanco}
+            width={200}
+            height={100}
+            alt="Logo Up Home Solution blanco."
+            className="logoBlanco"
+          />
+        </div>
+        <div className="bloqueForm" style={{ height: `${altura + 60}px` }}>
+            <form onSubmit={(e) => e.preventDefault()} ref={formRef}>
+              <label className={valiCamp1 ? "error" : ""}>
+                <select name="tipoVendedor" value={idVendedor} onChange={(e:any) => {setIdVendedor(e.target.value); setValiCamp1(false)}}>
+                  <option value="0"></option>
+                  {rangos.map((item) => (
+                    <option key={item.id} value={item.id}>{item.nombre}</option>
+                  ))}
+                </select>
+                <span className={idVendedor != 0 ? "activo" : ""}>Rango de Vendedor</span>
               </label>
 
-              <button type="button" onClick={handleClick}>Hola mundo</button>
+              <label className={valiCamp2 ? "error" : ""}>
+                  <input
+                    type="number"
+                    name="paneles"
+                    min="10"
+                    max="75"
+                    onChange={(e:any) => {setPaneles(e.target.value)}}
+                    value={paneles}
+                  />
+                  <span className={paneles != 0 ? "activo" : ""}>Cantidad de Paneles</span>
+              </label>
 
-              <div className="comision">
-                
+              <label className={valiCamp3 ? "error" : ""}>
+                  <select name="tipoBateria" value={bateria} onChange={(e:any) => {setBateria(e.target.value); setValiCamp3(false)}}>
+                    <option value=""></option>
+                    <option value="Solar_Edge">S. Edge</option>
+                    <option value="Tesla">Tesla</option>
+                  </select>
+                  <span className={bateria != "" ? "activo" : ""}>Tipo de Batería</span>
+              </label>
+                  
+              <label>
+                <select
+                  name="numeroBaterias"
+                  onChange={(e:any) => {setCantBateria(e.target.value)}}
+                  disabled={catnBatBloq}
+                  value={cantBateria}
+                >
+                  {listOpciones.map(item=>(
+                    <option value={item} key={item}>{item}</option>
+                  ))}
+                </select>
+                <span className={cantBateria != 0 ? "activo" : ""}>Número de Baterías</span>
+              </label>
+
+              <div className="selectores">
+                <p>Seleciona los adders (opcional)</p>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="adder1"
+                    onChange={handleCheck1}
+                    checked={adder1}
+                  />
+                  <span>Zanja o equipo existente</span>
+                </label> 
+                <label>
+                  <input
+                    type="checkbox"
+                    name="adder2"
+                    onChange={handleCheck2}
+                    checked={adder2}
+                  />
+                  <span>Sellado de Techo</span>
+                </label>
               </div>
-              <div className="epctotal"></div>
 
-              <button type="button" onClick={handleClick}>Modificar valores</button>
-              <button type="button" onClick={handleClick}>Nueva cotización</button>
+              <button className="botonGenerar" type="button" onClick={generaCotizacion}>Generar cotización</button>
+            </form>
+
+          <div className="visualizador" ref={divRef}>
+                <div className="epcBase">
+                  <p>EPC Base</p>
+                  <p>${epcBase}</p>
+                </div>
+
+                <label>
+                  <span>EPC Vendido</span>
+                  <input type="number"  onChange={(e:any) => {setEpcVendido(e.target.value)}} value={epcVendido}/>
+                </label>
+
+                <button className="calculaCom" type="button" onClick={calcularComision}>Calcular comisión</button>
+    
+                <div className="epctotal">
+                  <p>Total Solar Ajustado</p>
+                  <p>${solarAjustado}</p>
+                </div>
+
+                <div className="comision">
+                  <p>Comisión del %</p>
+                  <p>${totalComision}</p>
+                </div>
+
+                <p>Valor estimado de comision. (Puede variar respecto a la comision real)</p>
+
+                <button className="accionAtras" type="button" onClick={modificaValores}>Modificar valores</button>
+                <button className="accionAtras" type="button" onClick={nuevaCotiazcion}>Nueva cotización</button>
+
+          </div>
 
         </div>
-
       </div>
-      </div>
+    </div>
 
-  );
+  ) : null
 }

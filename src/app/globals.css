@@ -6,13 +6,659 @@
   --lgreen: #63BF7C;
 }
 
-
-.container{
-  display: flex;
-  flex-direction: column;
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-form{
+body{
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.contenedor{
+  width: 100%;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.contenedor::before{
+  content: '';
+  width: 100%;
+  height: 40vh;
+  background-color: var(--green);
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: -1;
+  transition: .4s all ease;
+  -webkit-transition: .4s all ease;
+  -moz-transition: .4s all ease;
+  -ms-transition: .4s all ease;
+  -o-transition: .4s all ease;
+  transform: translateY(-100%);
+  -webkit-transform: translateY(-100%);
+  -moz-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+  -o-transform: translateY(-100%);
+}
+
+
+.contenedor::after{
+  content: '';
+  width: 100%;
+  height: 100px;
+  background-color: var(--green);
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  z-index: -1;
+  transition: .4s all ease;
+  -webkit-transition: .4s all ease;
+  -moz-transition: .4s all ease;
+  -ms-transition: .4s all ease;
+  -o-transition: .4s all ease;
+  transform: translateY(0%);
+  -webkit-transform: translateY(0%);
+  -moz-transform: translateY(0%);
+  -ms-transform: translateY(0%);
+  -o-transform: translateY(0%);
+}
+
+.contenedor.activo::before{
+  transform: translateY(0%);
+  -webkit-transform: translateY(0%);
+  -moz-transform: translateY(0%);
+  -ms-transform: translateY(0%);
+  -o-transform: translateY(0%);
+}
+
+.contenedor.activo::after{
+  transform: translateY(100%);
+  -webkit-transform: translateY(100%);
+  -moz-transform: translateY(100%);
+  -ms-transform: translateY(100%);
+  -o-transform: translateY(100%);
+}
+
+.contenedor .sec{
+  margin-top: -120px;
+  max-width: 80%;
+  width: 1000px;
+}
+
+.contenedor .sec .logo{
+  position: relative;
+  height: 120px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.contenedor .sec .logo img{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transition: .4s all ease;
+  -webkit-transition: .4s all ease;
+  -moz-transition: .4s all ease;
+  -ms-transition: .4s all ease;
+  -o-transition: .4s all ease;
+}
+
+.contenedor.activo .sec .logo img.logoColor,
+.contenedor .sec .logo img.logoBlanco{
+  opacity: 0;
+}
+.contenedor.activo .sec .logo img.logoBlanco,
+.contenedor .sec .logo img.logoColor{
+  opacity: 1;
+}
+
+.contenedor .sec .bloqueForm{
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0,0,0,.4);
+  transition: .4s all ease;
+  -webkit-transition: .4s all ease;
+  -moz-transition: .4s all ease;
+  -ms-transition: .4s all ease;
+  -o-transition: .4s all ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.contenedor .sec .bloqueForm::after{
+  content: '';
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  transition: .4s all ease;
+  -webkit-transition: .4s all ease;
+  -moz-transition: .4s all ease;
+  -ms-transition: .4s all ease;
+  -o-transition: .4s all ease;
+  border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -ms-border-radius: 7px;
+  -o-border-radius: 7px;
+  transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  -moz-transform: translateX(100%);
+  -ms-transform: translateX(100%);
+  -o-transform: translateX(100%);
+}
+
+
+.contenedor.activo .sec .bloqueForm::after{
+  transform: translateX(0%);
+  -webkit-transform: translateX(0%);
+  -moz-transform: translateX(0%);
+  -ms-transform: translateX(0%);
+  -o-transform: translateX(0%);
+}
+
+
+
+
+.contenedor .sec .bloqueForm form{
+  display: flex;
+  flex-wrap: wrap;
+  transition: .4s;
+  -webkit-transition: .4s;
+  -moz-transition: .4s;
+  -ms-transition: .4s;
+  -o-transition: .4s;
+  position: relative;
+}
+
+.contenedor .sec .bloqueForm form label{
+  width: 100% ;
+  position: relative;
+  height: 45px ;
+  border-bottom: 1px solid rgba(0,0,0,.2);
+  margin-bottom: 20px;
+  display: block;
+  cursor: pointer;
+  transition: .4s all ease;
+  -webkit-transition: .4s all ease;
+  -moz-transition: .4s all ease;
+  -ms-transition: .4s all ease;
+  -o-transition: .4s all ease;
+}
+
+.contenedor .sec .bloqueForm form label span{
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%) scale(1);
+  -webkit-transform: translateY(-50%) scale(1);
+  -moz-transform: translateY(-50%) scale(1);
+  -ms-transform: translateY(-50%) scale(1);
+  -o-transform: translateY(-50%) scale(1);
+  z-index: 1;
+  transform-origin: top left;
+  transition: .4s all ease;
+  -webkit-transition: .4s all ease;
+  -moz-transition: .4s all ease;
+  -ms-transition: .4s all ease;
+  -o-transition: .4s all ease;
+}
+
+.contenedor .sec .bloqueForm form label span.activo{
+  transform: scale(.7);
+  font-weight: bold;
+  transform: translateY(-130%) scale(.7);
+  -webkit-transform: translateY(-130%) scale(.7);
+  -moz-transform: translateY(-130%) scale(.7);
+  -ms-transform: translateY(-130%) scale(.7);
+  -o-transform: translateY(-130%) scale(.7);
+  left: 10px;
+}
+
+.contenedor .sec .bloqueForm form label.error{
+  border-bottom: 2px solid red;
+}
+
+.contenedor .sec .bloqueForm form label.error span{
+  color: red;
+}
+
+.contenedor .sec .bloqueForm form label select,
+.contenedor .sec .bloqueForm form label input{
+  width: 100%;
+  height: 100%;
+  padding: 5px 15px;
+  padding-bottom: 0px;
+  position: relative;
+  z-index: 2;
+}
+
+.contenedor .sec .bloqueForm form .selectores{
+  width: 100%;
+}
+
+.contenedor .sec .bloqueForm form .selectores p{
+  font-weight: bold;
+  font-size: 12px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.contenedor .sec .bloqueForm form .selectores label{
+  border: 0;
+}
+
+.contenedor .sec .bloqueForm form .selectores label input{
+  width: 0px;
+  height: 0px;
+  opacity: 0;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+}
+
+.contenedor .sec .bloqueForm form .selectores label span{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  transform: translateY(0);
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  -o-transform: translateY(0);
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--green);
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  transition: .4s all ease;
+  -webkit-transition: .4s all ease;
+  -moz-transition: .4s all ease;
+  -ms-transition: .4s all ease;
+  -o-transition: .4s all ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.contenedor .sec .bloqueForm form .selectores label input:checked ~ span{
+  color: #fff;
+  border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
+}
+
+
+.contenedor .sec .bloqueForm form .selectores label span::before,
+.contenedor .sec .bloqueForm form .selectores label span::after{
+  content: '';
+  width: calc(50% + 1px);
+  height: 100%;
+  background-color: #033922;
+  top: 0;
+  position: absolute;
+  transition: .4s transform ease;
+  -webkit-transition: .4s transform ease;
+  -moz-transition: .4s transform ease;
+  -ms-transition: .4s transform ease;
+  -o-transition: .4s transform ease;
+  transform: scaleX(0);
+  -webkit-transform: scaleX(0);
+  -moz-transform: scaleX(0);
+  -ms-transform: scaleX(0);
+  -o-transform: scaleX(0);
+  z-index: -1;
+}
+
+.contenedor .sec .bloqueForm form .selectores label span::before{
+  left: 0;
+  transform-origin: right;
+}
+
+.contenedor .sec .bloqueForm form .selectores label span::after{
+  right: 0;
+  transform-origin: left;
+}
+
+.contenedor .sec .bloqueForm form .selectores label input:checked ~ span::before{
+  transform-origin: left;
+  transform: scaleX(1);
+  -webkit-transform: scaleX(1);
+  -moz-transform: scaleX(1);
+  -ms-transform: scaleX(1);
+  -o-transform: scaleX(1);
+}
+
+.contenedor .sec .bloqueForm form .selectores label input:checked ~ span::after{
+  transform-origin: right;
+  transform: scaleX(1);
+  -webkit-transform: scaleX(1);
+  -moz-transform: scaleX(1);
+  -ms-transform: scaleX(1);
+  -o-transform: scaleX(1);
+}
+
+.contenedor .sec .bloqueForm form .botonGenerar{
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  height: 45px;
+  margin-top: 10px;
+  background-color: var(--green);
+  color: #fff;
+  position: relative;
+  z-index: 1;
+  transition: .4s all ease;
+  -webkit-transition: .4s all ease;
+  -moz-transition: .4s all ease;
+  -ms-transition: .4s all ease;
+  -o-transition: .4s all ease;
+  overflow: hidden;
+}
+
+.contenedor .sec .bloqueForm form .botonGenerar::before,
+.contenedor .sec .bloqueForm form .botonGenerar::after{
+  content: '';
+  width: 45px;
+  height: 45px;
+  background-color: var(--yellow);
+  top: 0;
+  right: 0;
+  position: absolute;
+  z-index: 2;
+  clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 51% 100%, 75% 50%, 51% 0);
+  transition: .4s all ease;
+  -webkit-transition: .4s all ease;
+  -moz-transition: .4s all ease;
+  -ms-transition: .4s all ease;
+  -o-transition: .4s all ease;
+  transform: translateX(100%) scaleY(-1);
+  -webkit-transform: translateX(100%) scaleY(-1);
+  -moz-transform: translateX(100%) scaleY(-1);
+  -ms-transform: translateX(100%) scaleY(-1);
+  -o-transform: translateX(100%) scaleY(-1);
+}
+
+
+.contenedor .sec .bloqueForm form .botonGenerar::before{
+  right: 20px;
+  transition-delay: 0s;
+}
+
+.contenedor .sec .bloqueForm form .botonGenerar::after{
+  transition-delay: .1s;
+}
+
+.contenedor .sec .bloqueForm form .botonGenerar:hover{
+  padding-right: 30px;
+}
+
+.contenedor .sec .bloqueForm form .botonGenerar:hover:before{
+  transition-delay: .1s;
+}
+
+.contenedor .sec .bloqueForm form .botonGenerar:hover:after{
+  transition-delay: 0s;
+}
+
+.contenedor .sec .bloqueForm form .botonGenerar:hover:before,
+.contenedor .sec .bloqueForm form .botonGenerar:hover:after{
+  transform: translateX(0) scaleX(1);
+  -webkit-transform: translateX(0) scaleX(1);
+  -moz-transform: translateX(0) scaleX(1);
+  -ms-transform: translateX(0) scaleX(1);
+  -o-transform: translateX(0) scaleX(1);
+}
+
+
+/*.contenedor .sec .bloqueForm form{*/
+/*  display: none;*/
+/*}*/
+/**/
+/*.contenedor .sec .bloqueForm .visualizador{*/
+/*  display: flex;*/
+/*  flex-wrap: wrap;*/
+/*  text-align: center;*/
+/*}*/
+
+.contenedor .sec .bloqueForm .visualizador{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(100%, -50%);
+  -webkit-transform: translate(100%, -50%);
+  -moz-transform: translate(100%, -50%);
+  -ms-transform: translate(100%, -50%);
+  -o-transform: translate(100%, -50%);
+  z-index: 4;
+  opacity: 0;
+  visibility: hidden;
+  transition: .4s all ease;
+  -webkit-transition: .4s all ease;
+  -moz-transition: .4s all ease;
+  -ms-transition: .4s all ease;
+  -o-transition: .4s all ease;
+  width: calc(100% - 60px);
+}
+
+.contenedor.activo .sec .bloqueForm .visualizador{
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+}
+
+
+.contenedor .sec .bloqueForm .visualizador .epcBase{
+  text-align: center;
+  border-bottom: 1px dashed var(--yellow);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.contenedor .sec .bloqueForm .visualizador .epcBase p:first-of-type{
+  font-weight: 600;
+  color: #033922;
+}
+
+.contenedor .sec .bloqueForm .visualizador label,
+.contenedor .sec .bloqueForm .visualizador button,
+.contenedor .sec .bloqueForm .visualizador div{
+  text-align: center;
+  width: 100%;
+}
+
+.contenedor .sec .bloqueForm .visualizador label{
+  
+  padding-bottom: 15px;
+}
+
+.contenedor .sec .bloqueForm .visualizador label input{
+  text-align: center;
+  width: 100%;
+  height: 30px;
+  border-bottom: 1px solid rgba(0,0,0,.2);
+  padding-bottom: 10px;
+}
+
+.contenedor .sec .bloqueForm .visualizador label span{
+  font-weight: 600;
+  color: #033922;
+  display: block;
+}
+
+.contenedor .sec .bloqueForm .visualizador .calculaCom{
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  height: 45px;
+  margin-top: 10px;
+  background-color: var(--green);
+  color: #fff;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.contenedor .sec .bloqueForm .visualizador .epctotal,
+.contenedor .sec .bloqueForm .visualizador .comision{
+  text-align: center;
+  border-bottom: 1px dashed var(--yellow);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.contenedor .sec .bloqueForm .visualizador .epctotal p:first-of-type,
+.contenedor .sec .bloqueForm .visualizador .comision p:first-of-type{
+  font-weight: 600;
+  color: #033922;
+}
+
+
+.contenedor .sec .bloqueForm .visualizador .accionAtras{
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  height: 45px;
+  margin-top: 10px;
+  background-color: var(--green);
+  color: #fff;
+  position: relative;
+  z-index: 1;
+  transition: .4s all ease;
+  -webkit-transition: .4s all ease;
+  -moz-transition: .4s all ease;
+  -ms-transition: .4s all ease;
+  -o-transition: .4s all ease;
+  overflow: hidden;
+}
+
+.contenedor .sec .bloqueForm .visualizador .accionAtras::before,
+.contenedor .sec .bloqueForm .visualizador .accionAtras::after{
+  content: '';
+  width: 45px;
+  height: 45px;
+  background-color: var(--yellow);
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: 2;
+  clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 51% 100%, 75% 50%, 51% 0);
+  transition: .4s all ease;
+  -webkit-transition: .4s all ease;
+  -moz-transition: .4s all ease;
+  -ms-transition: .4s all ease;
+  -o-transition: .4s all ease;
+  transform: translateX(-100%) scaleX(-1);
+  -webkit-transform: translateX(-100%) scaleX(-1);
+  -moz-transform: translateX(-100%) scaleX(-1);
+  -ms-transform: translateX(-100%) scaleX(-1);
+  -o-transform: translateX(-100%) scaleX(-1);
+}
+
+
+.contenedor .sec .bloqueForm .visualizador .accionAtras::before{
+  left: 20px;
+  transition-delay: 0s;
+}
+
+.contenedor .sec .bloqueForm .visualizador .accionAtras::after{
+  transition-delay: .1s;
+}
+
+.contenedor .sec .bloqueForm .visualizador .accionAtras:hover{
+  padding-left: 30px;
+}
+
+.contenedor .sec .bloqueForm .visualizador .accionAtras:hover:before{
+  transition-delay: .1s;
+}
+
+.contenedor .sec .bloqueForm .visualizador .accionAtras:hover:after{
+  transition-delay: 0s;
+}
+
+.contenedor .sec .bloqueForm .visualizador .accionAtras:hover:before,
+.contenedor .sec .bloqueForm .visualizador .accionAtras:hover:after{
+  transform: translateX(0) scale(-1);
+  -webkit-transform: translateX(0) scale(-1);
+  -moz-transform: translateX(0) scale(-1);
+  -ms-transform: translateX(0) scale(-1);
+  -o-transform: translateX(0) scale(-1);
+}
+
+.contenedor .sec .bloqueForm .visualizador > p{
+  text-align: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+@media(min-width: 900px){
+  .contenedor .sec .bloqueForm form{
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .contenedor .sec .bloqueForm form > label,
+  .contenedor .sec .bloqueForm form .selectores label{
+    width: 48%;
+  }
+  .contenedor .sec .bloqueForm form .selectores{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .contenedor .sec .bloqueForm form .selectores p{
+    width: 100%;
+  }
+
+  .contenedor .sec .bloqueForm .visualizador{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .contenedor .sec .bloqueForm .visualizador .calculaCom{
+    width: 70%;
+    margin: 0 auto;
+    margin-bottom: 40px;
+  }
+
+  .contenedor .sec .bloqueForm .visualizador .epctotal,
+  .contenedor .sec .bloqueForm .visualizador .comision,
+  .contenedor .sec .bloqueForm .visualizador .accionAtras{
+    width: 48%;
+  }
 }
