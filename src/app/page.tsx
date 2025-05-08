@@ -137,10 +137,10 @@ export default function Home() {
   }, [paneles, bateria]);
 
   // Funcionalidad de Checkboxes
-  const handleCheck1 = (e:any) => {
+  const handleCheck1 = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAdder1(e.target.checked)
   };
-  const handleCheck2 = (e:any) => {
+  const handleCheck2 = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAdder2(e.target.checked)
   };
 
@@ -149,9 +149,8 @@ export default function Home() {
     
     // Verificación de campos
 
-    idVendedor == 0 ? setValiCamp1(true) : setValiCamp1(false)
-    bateria == "" ? setValiCamp3(true) : setValiCamp3(false)
-    
+    setValiCamp1(idVendedor == 0);
+    setValiCamp3(bateria == "");
 
     if (!valiCamp1 && !valiCamp3 && idVendedor != 0 && bateria != "") {
       
@@ -322,7 +321,7 @@ export default function Home() {
         <div className="bloqueForm" style={{ height: `${altura + 60}px` }}>
             <form onSubmit={(e) => e.preventDefault()} ref={formRef}>
               <label className={valiCamp1 ? "error" : ""}>
-                <select name="tipoVendedor" value={idVendedor} onChange={(e:any) => {setIdVendedor(e.target.value); setValiCamp1(false)}}>
+                <select name="tipoVendedor" value={idVendedor} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {setIdVendedor(parseInt(e.target.value)); setValiCamp1(false)}}>
                   <option value="0"></option>
                   {rangos.map((item) => (
                     <option key={item.id} value={item.id}>{item.nombre}</option>
@@ -399,7 +398,7 @@ export default function Home() {
 
                 <label>
                   <span>EPC Vendido</span>
-                  <input type="number"  onChange={(e:any) => {setEpcVendido(e.target.value)}} value={epcVendido}/>
+                  <input type="number"  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setEpcVendido(parseFloat(e.target.value))}} value={epcVendido}/>
                 </label>
 
                 <button className="calculaCom" type="button" onClick={calcularComision}>Calcular comisión</button>
