@@ -152,7 +152,10 @@ export default function Home() {
     setValiCamp2(paneles < 10 || paneles == null);
     setValiCamp3(bateria == "");
 
-    if (!valiCamp1 && !valiCamp2 && !valiCamp3 && idVendedor != 0 && bateria != "" && (paneles < 10 || paneles == null) ) {
+    console.log(paneles < 10 || paneles == null);
+    
+
+    if (!valiCamp1 && !valiCamp2 && !valiCamp3 && idVendedor != 0 && bateria != "" && (paneles >= 10 || paneles != null) ) {
       
       
       if (divRef.current) {
