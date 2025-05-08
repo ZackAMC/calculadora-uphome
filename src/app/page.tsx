@@ -159,7 +159,7 @@ export default function Home() {
     console.log(paneles < 10 || paneles == null);
     
 
-    if (!valiCamp1 && !valiCamp2 && !valiCamp3 && idVendedor != 0 && bateria != "" && (paneles >= 10 || paneles != null) ) {
+    if (!valiCamp1 && !valiCamp2 && !valiCamp3 && !valiCamp4 && idVendedor != 0 && bateria != "" && tipoTecho != "" && (paneles >= 10 || paneles != null) ) {
       
       
       if (divRef.current) {
@@ -414,7 +414,7 @@ export default function Home() {
               <label className={valiCamp4 ? "error" : ""}>
                 <select
                   name="tipoTecho"
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {setTipoTecho(e.target.value)}}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {setTipoTecho(e.target.value); setValiCamp4(false)}}
                   value={tipoTecho}
                 >
                   <option value=""></option>
@@ -439,7 +439,7 @@ export default function Home() {
                 </label>
 
                 <button className="calculaCom" type="button" onClick={calcularComision}>Calcular comisión</button>
-                
+
                 {solarAjustado > 0 ? (
                   <>
                   <div className="epctotal">
