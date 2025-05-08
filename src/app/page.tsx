@@ -47,7 +47,6 @@ export default function Home() {
   useEffect(()=>{
 
     if (paneles < 10) {
-      setPaneles(10)
       setValiCamp2(true)
     } else {
       setValiCamp2(false)
