@@ -13,7 +13,7 @@ export default function Home() {
   const [ bateria, setBateria ] = useState<string>("")
   const [ cantBateria, setCantBateria ] = useState<number>(1)
   const [ catnBatBloq, setCatnBatBloq ] = useState<boolean>(false)
-  const [ listOpciones, setListOpciones ] = useState<any[]>(["1"])
+  const [ listOpciones, setListOpciones ] = useState<string[]>(["1"])
   const [ adder1, setAdder1 ] = useState<boolean>(false)
   const [ adder2, setAdder2 ] = useState<boolean>(false)
   const [ calcState, setCalcState ] = useState<boolean>(false)
@@ -336,14 +336,14 @@ export default function Home() {
                     name="paneles"
                     min="10"
                     max="75"
-                    onChange={(e:any) => {setPaneles(e.target.value)}}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setPaneles(parseInt(e.target.value))}}
                     value={paneles}
                   />
                   <span className={paneles != 0 ? "activo" : ""}>Cantidad de Paneles</span>
               </label>
 
               <label className={valiCamp3 ? "error" : ""}>
-                  <select name="tipoBateria" value={bateria} onChange={(e:any) => {setBateria(e.target.value); setValiCamp3(false)}}>
+                  <select name="tipoBateria" value={bateria} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {setBateria(e.target.value); setValiCamp3(false)}}>
                     <option value=""></option>
                     <option value="Solar_Edge">S. Edge</option>
                     <option value="Tesla">Tesla</option>
@@ -354,7 +354,7 @@ export default function Home() {
               <label>
                 <select
                   name="numeroBaterias"
-                  onChange={(e:any) => {setCantBateria(e.target.value)}}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {setCantBateria(parseInt(e.target.value))}}
                   disabled={catnBatBloq}
                   value={cantBateria}
                 >
