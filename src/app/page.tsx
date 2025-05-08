@@ -23,9 +23,12 @@ export default function Home() {
   const [ epcVendido, setEpcVendido ] = useState<number>(0)
   const [ totalComision, setTotalComision ] = useState<number>(0)
 
+  const [ tipoTecho, setTipoTecho ] = useState<string>("")
+
   const [ valiCamp1, setValiCamp1 ] = useState<boolean>(false)
   const [ valiCamp2, setValiCamp2 ] = useState<boolean>(false)
   const [ valiCamp3, setValiCamp3 ] = useState<boolean>(false)
+  const [ valiCamp4, setValiCamp4 ] = useState<boolean>(false)
 
   const formRef = useRef<HTMLFormElement>(null);
   const divRef = useRef<HTMLDivElement>(null);
@@ -151,6 +154,7 @@ export default function Home() {
     setValiCamp1(idVendedor == 0);
     setValiCamp2(paneles < 10 || paneles == null);
     setValiCamp3(bateria == "");
+    setValiCamp4(tipoTecho == "");
 
     console.log(paneles < 10 || paneles == null);
     
@@ -224,7 +228,15 @@ export default function Home() {
     }
   }
 
+
   const calcularComision = () =>{
+
+
+    setTimeout(() => {
+      if (divRef.current) {
+        setAltura(divRef.current.offsetHeight);
+      }
+    }, 50);
 
     // solar ajustado al epc vendido
     let baseTotal = epcVendido * epcTotalBase
@@ -238,6 +250,15 @@ export default function Home() {
 
     if (adder2) {
       baseTotal = baseTotal - 2500
+    }
+
+    if (tipoTecho != "") {
+      if(tipoTecho == "Cemento") {
+        baseTotal = baseTotal - 2500
+      }
+      if (tipoTecho == "Zinc") {
+        baseTotal = baseTotal - 2000
+      }
     }
 
     if (epcVendido < epcBase) {
@@ -367,7 +388,7 @@ export default function Home() {
                 </select>
                 <span className={cantBateria != 0 ? "activo" : ""}>Número de Baterías</span>
               </label>
-
+              
               <div className="selectores">
                 <p>Seleciona los adders (opcional)</p>
                 <label>
@@ -390,6 +411,19 @@ export default function Home() {
                 </label>
               </div>
 
+              <label className={valiCamp4 ? "error" : ""}>
+                <select
+                  name="tipoTecho"
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {setTipoTecho(e.target.value)}}
+                  value={tipoTecho}
+                >
+                  <option value=""></option>
+                  <option value="Cemento">Cemento</option>
+                  <option value="Zinc">Zinc</option>
+                </select>
+                <span className={tipoTecho != "" ? "activo" : ""}>Tipo de techo</span>
+              </label>
+
               <button className="botonGenerar" type="button" onClick={generaCotizacion}>Generar cotización</button>
             </form>
 
@@ -405,16 +439,23 @@ export default function Home() {
                 </label>
 
                 <button className="calculaCom" type="button" onClick={calcularComision}>Calcular comisión</button>
-    
-                <div className="epctotal">
-                  <p>Total Solar Ajustado</p>
-                  <p>${solarAjustado}</p>
-                </div>
+                
+                {solarAjustado > 0 ? (
+                  <>
+                  <div className="epctotal">
+                    <p>Total Solar Ajustado</p>
+                    <p>${solarAjustado}</p>
+                  </div>
 
-                <div className="comision">
-                  <p>Comisión del %</p>
-                  <p>${totalComision}</p>
-                </div>
+                  <div className="comision">
+                    <p>Comisión del %</p>
+                    <p>${totalComision}</p>
+                  </div>
+                  </>
+                ): (<p>EPC Vendido demasiado bajo.</p>)}
+
+
+                
 
                 <p>Valor estimado de comision. (Puede variar respecto a la comision real)</p>
 
