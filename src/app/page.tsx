@@ -455,10 +455,11 @@ export default function Home() {
 
                 {solarAjustado > 0 ? (
                   <>
-                  <div className="epctotal">
+                  <div className="epctotal" style={{display: "none"}}>
                     <p>Total Solar Ajustado</p>
                     <p>${solarAjustado}</p>
                   </div>
+                  
 
                   <div className="comision">
                     <p>Comisión del %</p>
