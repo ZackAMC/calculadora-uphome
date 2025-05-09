@@ -284,7 +284,8 @@ export default function Home() {
 
     if (rangoSelec && typeof rangoSelec.porcentaje === 'number') {
       const percent = rangoSelec.porcentaje / 100;
-      setTotalComision(Math.round(totalBaseDesc * percent));
+      //setTotalComision(Math.round(totalBaseDesc * percent));
+      setTotalComision(totalBaseDesc * percent);
     } else {
       console.error('No se encontró el rango o porcentaje inválido');
       setTotalComision(0); // o maneja el error como prefieras
