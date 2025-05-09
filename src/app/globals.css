@@ -519,6 +519,32 @@ body{
   display: block;
 }
 
+.contenedor .sec .bloqueForm .visualizador label.epcVendido{
+  background-color: var(--yellow);
+  padding: 20px;
+  margin-bottom: 10px;
+  display: block;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+.contenedor .sec .bloqueForm .visualizador label.epcVendido span{
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.contenedor .sec .bloqueForm .visualizador label.epcVendido input{
+  background-color: rgba(255, 255, 255, 0.7);
+  border-bottom: 0;
+  padding-top: 10px;
+  height: auto;
+}
+
+
+
 .contenedor .sec .bloqueForm .visualizador .calculaCom{
   width: 100%;
   text-align: center;
@@ -635,6 +661,9 @@ body{
   .contenedor .sec .bloqueForm form .selectores label{
     width: 48%;
   }
+  .contenedor .sec .bloqueForm form .selectores label{
+    width: 32%;
+  }
   .contenedor .sec .bloqueForm form .selectores{
     display: flex;
     flex-wrap: wrap;
@@ -649,6 +678,10 @@ body{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+  }
+
+  .contenedor .sec .bloqueForm .visualizador label.epcVendido{
+    margin-bottom: 30px;
   }
 
   .contenedor .sec .bloqueForm .visualizador .calculaCom{

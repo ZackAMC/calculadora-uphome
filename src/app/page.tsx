@@ -16,6 +16,7 @@ export default function Home() {
   const [ listOpciones, setListOpciones ] = useState<string[]>(["1"])
   const [ adder1, setAdder1 ] = useState<boolean>(false)
   const [ adder2, setAdder2 ] = useState<boolean>(false)
+  const [ adder3, setAdder3 ] = useState<boolean>(false)
   const [ calcState, setCalcState ] = useState<boolean>(false)
   const [ epcBase, setEpcBase ] = useState<number>(0)
   const [ epcTotalBase, setEpcTotalBase ] = useState<number>(0)
@@ -23,7 +24,7 @@ export default function Home() {
   const [ epcVendido, setEpcVendido ] = useState<number>(0)
   const [ totalComision, setTotalComision ] = useState<number>(0)
 
-  const [ tipoTecho, setTipoTecho ] = useState<string>("")
+  const [ tipoTecho, setTipoTecho ] = useState<string>("Cemento")
 
   const [ valiCamp1, setValiCamp1 ] = useState<boolean>(false)
   const [ valiCamp2, setValiCamp2 ] = useState<boolean>(false)
@@ -145,6 +146,9 @@ export default function Home() {
   const handleCheck2 = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAdder2(e.target.checked)
   };
+  const handleCheck3 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAdder3(e.target.checked)
+  };
 
   // Funcionalidad de botones
   const generaCotizacion = ()=>{
@@ -252,13 +256,12 @@ export default function Home() {
       baseTotal = baseTotal - 2500
     }
 
-    if (tipoTecho != "") {
-      if(tipoTecho == "Cemento") {
-        baseTotal = baseTotal - 2500
-      }
-      if (tipoTecho == "Zinc") {
-        baseTotal = baseTotal - 2000
-      }
+    if (adder3) {
+      baseTotal = baseTotal - 1000
+    }
+
+    if (tipoTecho == "Zinc") {
+      baseTotal = baseTotal - 2000
     }
 
     if (epcVendido < epcBase) {
@@ -309,6 +312,7 @@ export default function Home() {
     setAdder2(false)
     setIdVendedor(0)
     setEpcBase(0)
+    setTipoTecho("Cemento")
     if (formRef.current) {
       setAltura(formRef.current.offsetHeight);
     }
@@ -398,7 +402,16 @@ export default function Home() {
                     onChange={handleCheck1}
                     checked={adder1}
                   />
-                  <span>Zanja o equipo existente</span>
+                  <span>Zanja</span>
+                </label> 
+                <label>
+                  <input
+                    type="checkbox"
+                    name="adder1"
+                    onChange={handleCheck3}
+                    checked={adder3}
+                  />
+                  <span>Equipo existente</span>
                 </label> 
                 <label>
                   <input
@@ -417,7 +430,6 @@ export default function Home() {
                   onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {setTipoTecho(e.target.value); setValiCamp4(false)}}
                   value={tipoTecho}
                 >
-                  <option value=""></option>
                   <option value="Cemento">Cemento</option>
                   <option value="Zinc">Zinc</option>
                 </select>
@@ -433,7 +445,7 @@ export default function Home() {
                   <p>${epcBase}</p>
                 </div>
 
-                <label>
+                <label className="epcVendido">
                   <span>EPC Vendido</span>
                   <input type="number"  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setEpcVendido(parseFloat(e.target.value))}} value={epcVendido}/>
                 </label>
