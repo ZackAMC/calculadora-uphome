@@ -661,9 +661,6 @@ body{
   .contenedor .sec .bloqueForm form .selectores label{
     width: 48%;
   }
-  .contenedor .sec .bloqueForm form .selectores label{
-    width: 32%;
-  }
   .contenedor .sec .bloqueForm form .selectores{
     display: flex;
     flex-wrap: wrap;

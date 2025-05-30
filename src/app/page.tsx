@@ -17,6 +17,7 @@ export default function Home() {
   const [ adder1, setAdder1 ] = useState<boolean>(false)
   const [ adder2, setAdder2 ] = useState<boolean>(false)
   const [ adder3, setAdder3 ] = useState<boolean>(false)
+  const [ adder4, setAdder4 ] = useState<boolean>(false)
   const [ calcState, setCalcState ] = useState<boolean>(false)
   const [ epcBase, setEpcBase ] = useState<number>(0)
   const [ epcTotalBase, setEpcTotalBase ] = useState<number>(0)
@@ -149,6 +150,9 @@ export default function Home() {
   const handleCheck3 = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAdder3(e.target.checked)
   };
+   const handleCheck4 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAdder4(e.target.checked)
+  };
 
   // Funcionalidad de botones
   const generaCotizacion = ()=>{
@@ -257,6 +261,10 @@ export default function Home() {
     }
 
     if (adder3) {
+      baseTotal = baseTotal - 1000
+    }
+
+    if (adder4) {
       baseTotal = baseTotal - 1000
     }
 
@@ -400,6 +408,15 @@ export default function Home() {
                   <input
                     type="checkbox"
                     name="adder1"
+                    onChange={handleCheck4}
+                    checked={adder4}
+                  />
+                  <span>UP Front Payment</span>
+                </label> 
+                <label>
+                  <input
+                    type="checkbox"
+                    name="adder1"
                     onChange={handleCheck1}
                     checked={adder1}
                   />
@@ -475,12 +492,10 @@ export default function Home() {
 
                 <button className="accionAtras" type="button" onClick={modificaValores}>Modificar valores</button>
                 <button className="accionAtras" type="button" onClick={nuevaCotiazcion}>Nueva cotización</button>
-
+                
           </div>
-
         </div>
       </div>
     </div>
-
   ) : null
 }
