@@ -273,9 +273,8 @@ export default function Home() {
     }
 
     if (epcVendido < epcBase) {
-      baseTotal = baseTotal - 5000
+      //baseTotal = baseTotal - 5000
       console.log("menor");
-      
     }
 
     const totalBaseDesc = baseTotal
