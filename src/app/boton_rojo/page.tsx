@@ -181,11 +181,11 @@ export default function BtnRojo() {
         
         if ( cantBateria == 1 ) {
 
-          if ( paneles >= 10 && paneles <= 12 ) {
-            setEpcBase(5.2)
+          if ( paneles >= 10 && paneles <= 13 ) {
+            setEpcBase(5)
           }
 
-          if ( paneles >= 13 && paneles <= 37 ) {
+          if ( paneles >= 14 && paneles <= 37 ) {
             setEpcBase(4.5)
           }
           
@@ -193,34 +193,34 @@ export default function BtnRojo() {
 
         if ( cantBateria == 2 ) {
           if ( paneles >= 25 && paneles <= 65 ) {
-            setEpcBase(4.55)
+            setEpcBase(4)
           }
         }
 
         if ( cantBateria >= 3 ) {
-          setEpcBase(4.5)
+          setEpcBase(4)
         }
       }
       if (bateria == "Solar_Edge") {
         
         if ( cantBateria == 1 ) {
 
-          if ( paneles >= 10 && paneles <= 12 ) {
-            setEpcBase(4.8)
+          if ( paneles >= 10 && paneles <= 13 ) {
+            setEpcBase(5)
           }
 
-          if ( paneles >= 13 && paneles <= 37 ) {
-            setEpcBase(4.25)
+          if ( paneles >= 14 && paneles <= 22 ) {
+            setEpcBase(4)
           }
           
         }
 
         if ( cantBateria == 2 ) {
           if ( paneles >= 23 && paneles <= 49 ) {
-            setEpcBase(4.3)
+            setEpcBase(4)
           }
           if ( paneles >= 50 ) {
-            setEpcBase(4.25)
+            setEpcBase(4)
           }
         }
 
