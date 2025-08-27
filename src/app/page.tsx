@@ -213,7 +213,11 @@ export default function Home() {
             setEpcBase(5)
           }
 
-          if ( paneles >= 14 && paneles <= 22 ) {
+          if ( paneles >= 14 && paneles <= 17 ) {
+            setEpcBase(4.5)
+          }
+
+          if ( paneles >= 18 && paneles <= 22 ) {
             setEpcBase(4)
           }
           
