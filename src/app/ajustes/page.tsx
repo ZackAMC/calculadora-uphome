@@ -65,7 +65,7 @@ export default function Home() {
   useEffect(() => {
 
     // Effect número de baterias
-    if (bateria == "Tesla") {
+    //if (bateria == "Tesla") {
 
       if (paneles <= 23) {
         // Obligatorio 1
@@ -109,7 +109,7 @@ export default function Home() {
       //  setCatnBatBloq(false)
       //  setListOpciones(["3", "4"])
       //}
-    }
+    //}
 
     //if (bateria == "Solar_Edge") {
     //  
@@ -384,19 +384,19 @@ export default function Home() {
     baseTotal = Math.round(baseTotal)
 
 
-    if (adder1) {
+    if (adder1) { // Lowfico, Cablería, Tubo, Zanja, Breaker & Equipo existente
       baseTotal = baseTotal - 1000
     }
 
-    if (adder2) {
+    if (adder2) { // Sellado de Techo
       baseTotal = baseTotal - 2500
     }
 
-    if (adder3) {
-      baseTotal = baseTotal - 1000
+    if (adder3) { // Galvalum y refuerzo de techo
+      baseTotal = baseTotal - 2000
     }
 
-    if (adder4) {
+    if (adder4) { // UP Front Payment
       baseTotal = baseTotal - 1000
     }
 
@@ -551,7 +551,7 @@ export default function Home() {
                     onChange={handleCheck1}
                     checked={adder1}
                   />
-                  <span>Zanja</span>
+                  <span>Lowfico, Cablería, Tubo, Zanja, Breaker & Equipo existente</span>
                 </label> 
                 <label>
                   <input
@@ -560,7 +560,7 @@ export default function Home() {
                     onChange={handleCheck3}
                     checked={adder3}
                   />
-                  <span>Equipo existente</span>
+                  <span>Galvalum y Refuerzo de techo</span>
                 </label> 
                 <label>
                   <input

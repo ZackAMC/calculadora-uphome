@@ -197,7 +197,7 @@ body{
 .contenedor .sec .bloqueForm form label{
   width: 100% ;
   position: relative;
-  height: 45px ;
+  height: 55px ;
   border-bottom: 1px solid rgba(0,0,0,.2);
   margin-bottom: 20px;
   display: block;
@@ -207,6 +207,7 @@ body{
   -moz-transition: .4s all ease;
   -ms-transition: .4s all ease;
   -o-transition: .4s all ease;
+  text-align: center;
 }
 
 .contenedor .sec .bloqueForm form label span{
@@ -225,6 +226,7 @@ body{
   -moz-transition: .4s all ease;
   -ms-transition: .4s all ease;
   -o-transition: .4s all ease;
+  line-height: 20px;
 }
 
 .contenedor .sec .bloqueForm form label span.activo{
