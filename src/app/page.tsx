@@ -67,14 +67,14 @@ export default function Home() {
     // Effect número de baterias
     if (bateria == "Tesla") {
 
-      if (paneles <= 24) {
+      if (paneles <= 23) {
         // Obligatorio 1
         setCantBateria(1)
         setCatnBatBloq(true)
         setListOpciones(["1"])
       }
 
-      if (paneles >= 25 && paneles <= 34) {
+      if (paneles >= 25 && paneles <= 30) {
         // Opcional 2
         setCantBateria(2)
         setCatnBatBloq(false)
@@ -82,60 +82,60 @@ export default function Home() {
       }
 
 
-      if (paneles >= 35 && paneles <= 49) {
+      if (paneles >= 31 && paneles <= 49) {
         // Obligatorio 2
         setCantBateria(2)
         setCatnBatBloq(true)
         setListOpciones(["2"])
       }
 
-      if (paneles >= 50 && paneles <= 61) {
+      if (paneles >= 50) {
         // Opcional 3
         setCantBateria(3)
         setCatnBatBloq(false)
         setListOpciones(["2", "3"])
       }
 
-      if (paneles >= 62 && paneles <= 73) {
-        // Obligatorio 3
-        setCantBateria(3)
-        setCatnBatBloq(true)
-        setListOpciones(["3"])
-      }
-
-      if (paneles >= 74) {
-        // Opcional 4
-        setCantBateria(4)
-        setCatnBatBloq(false)
-        setListOpciones(["3", "4"])
-      }
+      //if (paneles >= 62 && paneles <= 73) {
+      //  // Obligatorio 3
+      //  setCantBateria(3)
+      //  setCatnBatBloq(true)
+      //  setListOpciones(["3"])
+      //}
+//
+      //if (paneles >= 74) {
+      //  // Opcional 4
+      //  setCantBateria(4)
+      //  setCatnBatBloq(false)
+      //  setListOpciones(["3", "4"])
+      //}
     }
 
-    if (bateria == "Solar_Edge") {
-      
-      if (paneles <= 25) {
-        // Obligatorio 1
-        setCantBateria(1)
-        setCatnBatBloq(true)
-        setListOpciones(["1"])
-      }
-
-      if (paneles >= 26 && paneles <= 37) {
-        // Opcional 2
-        setCantBateria(2)
-        setCatnBatBloq(false)
-        setListOpciones(["1", "2"])
-      }
-
-      if (paneles >= 38) {
-        // Obligatorio 2
-        setCantBateria(2)
-        setCatnBatBloq(true)
-        setListOpciones(["2"])
-      }
-
-    }
-
+    //if (bateria == "Solar_Edge") {
+    //  
+    //  if (paneles <= 25) {
+    //    // Obligatorio 1
+    //    setCantBateria(1)
+    //    setCatnBatBloq(true)
+    //    setListOpciones(["1"])
+    //  }
+//
+    //  if (paneles >= 26 && paneles <= 37) {
+    //    // Opcional 2
+    //    setCantBateria(2)
+    //    setCatnBatBloq(false)
+    //    setListOpciones(["1", "2"])
+    //  }
+//
+    //  if (paneles >= 38) {
+    //    // Obligatorio 2
+    //    setCantBateria(2)
+    //    setCatnBatBloq(true)
+    //    setListOpciones(["2"])
+    //  }
+//
+    //}
+//
 
 
   }, [paneles, bateria]);
@@ -177,62 +177,186 @@ export default function Home() {
       setCalcState(true)
 
       // Establecemos el EPC Base segun tipo de batería y cantidad de baterias
-      if (bateria == "Tesla") {
+
+
+      if ( cantBateria == 1 ) {
+        //if ( paneles >= 10 && paneles <= 13 ) {
+        //  setEpcBase(5)
+        //}
+        //if ( paneles >= 14 && paneles <= 17 ) {
+        //  setEpcBase(4.5)
+        //}
+        //if ( paneles >= 18 && paneles <= 37 ) {
+        //  setEpcBase(4)
+        //}
         
-        if ( cantBateria == 1 ) {
+       
+        paneles == 10 ? setEpcBase(5.16) : null
+        paneles == 11 ? setEpcBase(4.89) : null
+        paneles == 12 ? setEpcBase(4.67) : null
+        paneles == 13 ? setEpcBase(4.48) : null
+        paneles == 14 ? setEpcBase(4.32) : null
+        paneles == 15 ? setEpcBase(4.18) : null
+        paneles == 16 ? setEpcBase(4.05) : null
+        paneles == 17 ? setEpcBase(3.94) : null
+        paneles == 18 ? setEpcBase(3.85) : null
+        paneles == 19 ? setEpcBase(3.76) : null
+        paneles == 20 ? setEpcBase(3.68) : null
+        paneles == 21 ? setEpcBase(3.61) : null
+        paneles == 22 ? setEpcBase(3.55) : null
+        paneles == 23 ? setEpcBase(3.49) : null
+        paneles == 24 ? setEpcBase(3.43) : null
+        paneles == 25 ? setEpcBase(3.39) : null
+        paneles == 26 ? setEpcBase(3.34) : null
+        paneles == 27 ? setEpcBase(3.30) : null
+        paneles == 28 ? setEpcBase(3.26) : null
+        paneles == 29 ? setEpcBase(3.22) : null
+        paneles == 30 ? setEpcBase(3.19) : null
 
-          if ( paneles >= 10 && paneles <= 13 ) {
-            setEpcBase(5)
-          }
-
-          if ( paneles >= 14 && paneles <= 17 ) {
-            setEpcBase(4.5)
-          }
-
-          if ( paneles >= 18 && paneles <= 37 ) {
-            setEpcBase(4)
-          }
-          
-        }
-
-        if ( cantBateria == 2 ) {
-          if ( paneles >= 25 && paneles <= 65 ) {
-            setEpcBase(4)
-          }
-        }
-
-        if ( cantBateria >= 3 ) {
-          setEpcBase(4)
-        }
-      }
-      if (bateria == "Solar_Edge") {
-        
-        if ( cantBateria == 1 ) {
-
-          if ( paneles >= 10 && paneles <= 13 ) {
-            setEpcBase(5)
-          }
-
-          if ( paneles >= 14 && paneles <= 17 ) {
-            setEpcBase(4.5)
-          }
-
-          if ( paneles >= 18 && paneles <= 22 ) {
-            setEpcBase(4)
-          }
-          
-        }
-
-        if ( cantBateria == 2 ) {
-          if ( paneles >= 23 && paneles <= 49 ) {
-            setEpcBase(4)
-          }
-          if ( paneles >= 50 ) {
-            setEpcBase(4)
-          }
-        }
 
       }
+
+      if ( cantBateria == 2 ) {
+        //if ( paneles >= 25 && paneles <= 65 ) {
+        //  setEpcBase(4)
+        //}
+        paneles == 24 ? setEpcBase(4.46) : null
+        paneles == 25 ? setEpcBase(4.37) : null
+        paneles == 26 ? setEpcBase(4.29) : null
+        paneles == 27 ? setEpcBase(4.21) : null
+        paneles == 28 ? setEpcBase(4.14) : null
+        paneles == 29 ? setEpcBase(4.07) : null
+        paneles == 30 ? setEpcBase(4.01) : null
+        paneles == 31 ? setEpcBase(3.95) : null
+        paneles == 32 ? setEpcBase(3.90) : null
+        paneles == 33 ? setEpcBase(3.85) : null
+        paneles == 34 ? setEpcBase(3.80) : null
+        paneles == 35 ? setEpcBase(3.75) : null
+        paneles == 36 ? setEpcBase(3.71) : null
+        paneles == 37 ? setEpcBase(3.67) : null
+        paneles == 38 ? setEpcBase(3.63) : null
+        paneles == 39 ? setEpcBase(3.59) : null
+        paneles == 40 ? setEpcBase(3.56) : null
+        paneles == 41 ? setEpcBase(3.52) : null
+        paneles == 42 ? setEpcBase(3.49) : null
+        paneles == 43 ? setEpcBase(3.46) : null
+        paneles == 44 ? setEpcBase(3.43) : null
+        paneles == 45 ? setEpcBase(3.41) : null
+        paneles == 46 ? setEpcBase(3.38) : null
+        paneles == 47 ? setEpcBase(3.36) : null
+        paneles == 48 ? setEpcBase(3.33) : null
+        paneles == 49 ? setEpcBase(3.31) : null
+        paneles == 50 ? setEpcBase(3.29) : null
+        paneles == 51 ? setEpcBase(3.27) : null
+        paneles == 52 ? setEpcBase(3.24) : null
+        paneles == 53 ? setEpcBase(3.22) : null
+        paneles == 54 ? setEpcBase(3.21) : null
+        paneles == 55 ? setEpcBase(3.19) : null
+        paneles == 56 ? setEpcBase(3.17) : null
+        paneles == 57 ? setEpcBase(3.15) : null
+        paneles == 58 ? setEpcBase(3.14) : null
+        paneles == 59 ? setEpcBase(3.12) : null
+        paneles == 60 ? setEpcBase(3.11) : null
+        paneles == 61 ? setEpcBase(3.09) : null
+        paneles == 62 ? setEpcBase(3.08) : null
+        paneles == 66 ? setEpcBase(3.02) : null
+        paneles == 67 ? setEpcBase(3.01) : null
+        paneles == 68 ? setEpcBase(3.00) : null
+        paneles == 69 ? setEpcBase(2.99) : null
+        paneles == 70 ? setEpcBase(2.98) : null
+        paneles == 71 ? setEpcBase(2.97) : null
+        paneles == 72 ? setEpcBase(2.95) : null
+        paneles == 73 ? setEpcBase(2.94) : null
+        paneles == 74 ? setEpcBase(2.93) : null
+
+      }
+
+      if ( cantBateria >= 3 ) {
+        //setEpcBase(4)
+
+        paneles == 50 ?  setEpcBase(3.78) : null
+        paneles == 51 ?  setEpcBase(3.75) : null
+        paneles == 52 ?  setEpcBase(3.72) : null
+        paneles == 53 ?  setEpcBase(3.69) : null
+        paneles == 54 ?  setEpcBase(3.66) : null
+        paneles == 55 ?  setEpcBase(3.64) : null
+        paneles == 56 ?  setEpcBase(3.61) : null
+        paneles == 57 ?  setEpcBase(3.59) : null
+        paneles == 58 ?  setEpcBase(3.56) : null
+        paneles == 59 ?  setEpcBase(3.54) : null
+        paneles == 60 ?  setEpcBase(3.52) : null
+        paneles == 61 ?  setEpcBase(3.50) : null
+        paneles == 62 ?  setEpcBase(3.47) : null
+        paneles == 66 ?  setEpcBase(3.40) : null
+        paneles == 67 ?  setEpcBase(3.38) : null
+        paneles == 68 ?  setEpcBase(3.36) : null
+        paneles == 69 ?  setEpcBase(3.35) : null
+        paneles == 70 ?  setEpcBase(3.33) : null
+        paneles == 71 ?  setEpcBase(3.31) : null
+        paneles == 72 ?  setEpcBase(3.30) : null
+        paneles == 73 ?  setEpcBase(3.28) : null
+        paneles == 74 ?  setEpcBase(3.27) : null
+
+      }
+
+
+      //if (bateria == "Tesla") {
+      //  
+      //  if ( cantBateria == 1 ) {
+//
+      //    if ( paneles >= 10 && paneles <= 13 ) {
+      //      setEpcBase(5)
+      //    }
+//
+      //    if ( paneles >= 14 && paneles <= 17 ) {
+      //      setEpcBase(4.5)
+      //    }
+//
+      //    if ( paneles >= 18 && paneles <= 37 ) {
+      //      setEpcBase(4)
+      //    }
+      //    
+      //  }
+//
+      //  if ( cantBateria == 2 ) {
+      //    if ( paneles >= 25 && paneles <= 65 ) {
+      //      setEpcBase(4)
+      //    }
+      //  }
+//
+      //  if ( cantBateria >= 3 ) {
+      //    setEpcBase(4)
+      //  }
+      //}
+
+      //if (bateria == "Solar_Edge") {
+      //  
+      //  if ( cantBateria == 1 ) {
+//
+      //    if ( paneles >= 10 && paneles <= 13 ) {
+      //      setEpcBase(5)
+      //    }
+//
+      //    if ( paneles >= 14 && paneles <= 17 ) {
+      //      setEpcBase(4.5)
+      //    }
+//
+      //    if ( paneles >= 18 && paneles <= 22 ) {
+      //      setEpcBase(4)
+      //    }
+      //    
+      //  }
+//
+      //  if ( cantBateria == 2 ) {
+      //    if ( paneles >= 23 && paneles <= 49 ) {
+      //      setEpcBase(4)
+      //    }
+      //    if ( paneles >= 50 ) {
+      //      setEpcBase(4)
+      //    }
+      //  }
+//
+      //}
     
 
       // Calcularmos el Size
