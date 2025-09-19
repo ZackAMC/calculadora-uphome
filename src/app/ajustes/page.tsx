@@ -180,183 +180,184 @@ export default function Home() {
 
 
       if ( cantBateria == 1 ) {
-        if ( paneles >= 10 && paneles <= 13 ) {
-          setEpcBase(5)
-        }
-        if ( paneles >= 14 && paneles <= 17 ) {
-          setEpcBase(4.5)
-        }
-        if ( paneles >= 18 && paneles <= 37 ) {
-          setEpcBase(4)
-        }
+        //if ( paneles >= 10 && paneles <= 13 ) {
+        //  setEpcBase(5)
+        //}
+        //if ( paneles >= 14 && paneles <= 17 ) {
+        //  setEpcBase(4.5)
+        //}
+        //if ( paneles >= 18 && paneles <= 37 ) {
+        //  setEpcBase(4)
+        //}
         
        
-        //if (paneles == 10) {setEpcBase(5.36)}
-        //if (paneles == 11) {setEpcBase(5.09)}
-        //if (paneles == 12) {setEpcBase(4.87)}
-        //if (paneles == 13) {setEpcBase(4.68)}
-        //if (paneles == 14) {setEpcBase(4.52)}
-        //if (paneles == 15) {setEpcBase(4.38)}
-        //if (paneles == 16) {setEpcBase(4.25)}
-        //if (paneles == 17) {setEpcBase(4.14)}
-        //if (paneles == 18) {setEpcBase(4.05)}
-        //if (paneles == 19) {setEpcBase(3.96)}
-        //if (paneles == 20) {setEpcBase(3.88)}
-        //if (paneles == 21) {setEpcBase(3.81)}
-        //if (paneles == 22) {setEpcBase(3.75)}
-        //if (paneles == 23) {setEpcBase(3.69)}
-        //if (paneles == 24) {setEpcBase(3.63)}
-        //if (paneles == 25) {setEpcBase(3.59)}
-        //if (paneles == 26) {setEpcBase(3.54)}
-        //if (paneles == 27) {setEpcBase(3.50)}
-        //if (paneles == 28) {setEpcBase(3.46)}
-        //if (paneles == 29) {setEpcBase(3.42)}
-        //if (paneles == 30) {setEpcBase(3.39)}
+        if (paneles == 10) {setEpcBase(5.36)}
+        if (paneles == 11) {setEpcBase(5.09)}
+        if (paneles == 12) {setEpcBase(4.87)}
+        if (paneles == 13) {setEpcBase(4.68)}
+        if (paneles == 14) {setEpcBase(4.52)}
+        if (paneles == 15) {setEpcBase(4.38)}
+        if (paneles == 16) {setEpcBase(4.25)}
+        if (paneles == 17) {setEpcBase(4.14)}
+        if (paneles == 18) {setEpcBase(4.05)}
+        if (paneles == 19) {setEpcBase(3.96)}
+        if (paneles == 20) {setEpcBase(3.88)}
+        if (paneles == 21) {setEpcBase(3.81)}
+        if (paneles == 22) {setEpcBase(3.75)}
+        if (paneles == 23) {setEpcBase(3.69)}
+        if (paneles == 24) {setEpcBase(3.63)}
+        if (paneles == 25) {setEpcBase(3.59)}
+        if (paneles == 26) {setEpcBase(3.54)}
+        if (paneles == 27) {setEpcBase(3.50)}
+        if (paneles == 28) {setEpcBase(3.46)}
+        if (paneles == 29) {setEpcBase(3.42)}
+        if (paneles == 30) {setEpcBase(3.39)}
 
 
       }
 
       if ( cantBateria == 2 ) {
-        if ( paneles >= 25 && paneles <= 65 ) {
-          setEpcBase(4)
-        }
-        //if(paneles == 24) {setEpcBase(4.66)}
-        //if(paneles == 25) {setEpcBase(4.57)}
-        //if(paneles == 26) {setEpcBase(4.49)}
-        //if(paneles == 27) {setEpcBase(4.41)}
-        //if(paneles == 28) {setEpcBase(4.34)}
-        //if(paneles == 29) {setEpcBase(4.27)}
-        //if(paneles == 30) {setEpcBase(4.21)}
-        //if(paneles == 31) {setEpcBase(4.15)}
-        //if(paneles == 32) {setEpcBase(4.10)}
-        //if(paneles == 33) {setEpcBase(4.05)}
-        //if(paneles == 34) {setEpcBase(4.00)}
-        //if(paneles == 35) {setEpcBase(3.95)}
-        //if(paneles == 36) {setEpcBase(3.91)}
-        //if(paneles == 37) {setEpcBase(3.87)}
-        //if(paneles == 38) {setEpcBase(3.83)}
-        //if(paneles == 39) {setEpcBase(3.79)}
-        //if(paneles == 40) {setEpcBase(3.76)}
-        //if(paneles == 41) {setEpcBase(3.72)}
-        //if(paneles == 42) {setEpcBase(3.69)}
-        //if(paneles == 43) {setEpcBase(3.66)}
-        //if(paneles == 44) {setEpcBase(3.63)}
-        //if(paneles == 45) {setEpcBase(3.61)}
-        //if(paneles == 46) {setEpcBase(3.58)}
-        //if(paneles == 47) {setEpcBase(3.56)}
-        //if(paneles == 48) {setEpcBase(3.53)}
-        //if(paneles == 49) {setEpcBase(3.51)}
-        //if(paneles == 50) {setEpcBase(3.49)}
-        //if(paneles == 51) {setEpcBase(3.47)}
-        //if(paneles == 52) {setEpcBase(3.44)}
-        //if(paneles == 53) {setEpcBase(3.42)}
-        //if(paneles == 54) {setEpcBase(3.41)}
-        //if(paneles == 55) {setEpcBase(3.39)}
-        //if(paneles == 56) {setEpcBase(3.37)}
-        //if(paneles == 57) {setEpcBase(3.35)}
-        //if(paneles == 58) {setEpcBase(3.34)}
-        //if(paneles == 59) {setEpcBase(3.32)}
-        //if(paneles == 60) {setEpcBase(3.31)}
-        //if(paneles == 61) {setEpcBase(3.29)}
-        //if(paneles == 62) {setEpcBase(3.28)}
-        //if(paneles == 66) {setEpcBase(3.22)}
-        //if(paneles == 67) {setEpcBase(3.21)}
-        //if(paneles == 68) {setEpcBase(3.20)}
-        //if(paneles == 69) {setEpcBase(3.19)}
-        //if(paneles == 70) {setEpcBase(3.18)}
-        //if(paneles == 71) {setEpcBase(3.17)}
-        //if(paneles == 72) {setEpcBase(3.15)}
-        //if(paneles == 73) {setEpcBase(3.14)}
-        //if(paneles == 74) {setEpcBase(3.13)}
+        //if ( paneles >= 25 && paneles <= 65 ) {
+        //  setEpcBase(4)
+        //}
+        if(paneles == 24) {setEpcBase(4.66)}
+        if(paneles == 25) {setEpcBase(4.57)}
+        if(paneles == 26) {setEpcBase(4.49)}
+        if(paneles == 27) {setEpcBase(4.41)}
+        if(paneles == 28) {setEpcBase(4.34)}
+        if(paneles == 29) {setEpcBase(4.27)}
+        if(paneles == 30) {setEpcBase(4.21)}
+        if(paneles == 31) {setEpcBase(4.15)}
+        if(paneles == 32) {setEpcBase(4.10)}
+        if(paneles == 33) {setEpcBase(4.05)}
+        if(paneles == 34) {setEpcBase(4.00)}
+        if(paneles == 35) {setEpcBase(3.95)}
+        if(paneles == 36) {setEpcBase(3.91)}
+        if(paneles == 37) {setEpcBase(3.87)}
+        if(paneles == 38) {setEpcBase(3.83)}
+        if(paneles == 39) {setEpcBase(3.79)}
+        if(paneles == 40) {setEpcBase(3.76)}
+        if(paneles == 41) {setEpcBase(3.72)}
+        if(paneles == 42) {setEpcBase(3.69)}
+        if(paneles == 43) {setEpcBase(3.66)}
+        if(paneles == 44) {setEpcBase(3.63)}
+        if(paneles == 45) {setEpcBase(3.61)}
+        if(paneles == 46) {setEpcBase(3.58)}
+        if(paneles == 47) {setEpcBase(3.56)}
+        if(paneles == 48) {setEpcBase(3.53)}
+        if(paneles == 49) {setEpcBase(3.51)}
+        if(paneles == 50) {setEpcBase(3.49)}
+        if(paneles == 51) {setEpcBase(3.47)}
+        if(paneles == 52) {setEpcBase(3.44)}
+        if(paneles == 53) {setEpcBase(3.42)}
+        if(paneles == 54) {setEpcBase(3.41)}
+        if(paneles == 55) {setEpcBase(3.39)}
+        if(paneles == 56) {setEpcBase(3.37)}
+        if(paneles == 57) {setEpcBase(3.35)}
+        if(paneles == 58) {setEpcBase(3.34)}
+        if(paneles == 59) {setEpcBase(3.32)}
+        if(paneles == 60) {setEpcBase(3.31)}
+        if(paneles == 61) {setEpcBase(3.29)}
+        if(paneles == 62) {setEpcBase(3.28)}
+        if(paneles == 66) {setEpcBase(3.22)}
+        if(paneles == 67) {setEpcBase(3.21)}
+        if(paneles == 68) {setEpcBase(3.20)}
+        if(paneles == 69) {setEpcBase(3.19)}
+        if(paneles == 70) {setEpcBase(3.18)}
+        if(paneles == 71) {setEpcBase(3.17)}
+        if(paneles == 72) {setEpcBase(3.15)}
+        if(paneles == 73) {setEpcBase(3.14)}
+        if(paneles == 74) {setEpcBase(3.13)}
 
       }
 
       if ( cantBateria >= 3 ) {
-        setEpcBase(4)
+        //setEpcBase(4)
 
-        //if (paneles == 50) {setEpcBase(3.98)}
-        //if (paneles == 51) {setEpcBase(3.95)}
-        //if (paneles == 52) {setEpcBase(3.92)}
-        //if (paneles == 53) {setEpcBase(3.89)}
-        //if (paneles == 54) {setEpcBase(3.86)}
-        //if (paneles == 55) {setEpcBase(3.84)}
-        //if (paneles == 56) {setEpcBase(3.81)}
-        //if (paneles == 57) {setEpcBase(3.79)}
-        //if (paneles == 58) {setEpcBase(3.76)}
-        //if (paneles == 59) {setEpcBase(3.74)}
-        //if (paneles == 60) {setEpcBase(3.72)}
-        //if (paneles == 61) {setEpcBase(3.70)}
-        //if (paneles == 62) {setEpcBase(3.67)}
-        //if (paneles == 66) {setEpcBase(3.60)}
-        //if (paneles == 67) {setEpcBase(3.58)}
-        //if (paneles == 68) {setEpcBase(3.56)}
-        //if (paneles == 69) {setEpcBase(3.55)}
-        //if (paneles == 70) {setEpcBase(3.53)}
-        //if (paneles == 71) {setEpcBase(3.51)}
-        //if (paneles == 72) {setEpcBase(3.50)}
-        //if (paneles == 73) {setEpcBase(3.48)}
-        //if (paneles == 74) {setEpcBase(3.47)}
-
-      }
-
-
-      if (bateria == "Tesla") {
-        
-        if ( cantBateria == 1 ) {
-
-          if ( paneles >= 10 && paneles <= 13 ) {
-            setEpcBase(5)
-          }
-
-          if ( paneles >= 14 && paneles <= 17 ) {
-            setEpcBase(4.5)
-          }
-
-          if ( paneles >= 18 && paneles <= 37 ) {
-            setEpcBase(4)
-          }
-          
-        }
-
-        if ( cantBateria == 2 ) {
-          if ( paneles >= 25 && paneles <= 65 ) {
-            setEpcBase(4)
-          }
-        }
-
-        if ( cantBateria >= 3 ) {
-          setEpcBase(4)
-        }
-      }
-     if (bateria == "Solar_Edge") {
-        
-        if ( cantBateria == 1 ) {
-
-          if ( paneles >= 10 && paneles <= 13 ) {
-            setEpcBase(5)
-          }
-
-          if ( paneles >= 14 && paneles <= 17 ) {
-            setEpcBase(4.5)
-          }
-
-          if ( paneles >= 18 && paneles <= 22 ) {
-            setEpcBase(4)
-          }
-          
-        }
-
-        if ( cantBateria == 2 ) {
-          if ( paneles >= 23 && paneles <= 49 ) {
-            setEpcBase(4)
-          }
-          if ( paneles >= 50 ) {
-            setEpcBase(4)
-          }
-        }
+        if (paneles == 50) {setEpcBase(3.98)}
+        if (paneles == 51) {setEpcBase(3.95)}
+        if (paneles == 52) {setEpcBase(3.92)}
+        if (paneles == 53) {setEpcBase(3.89)}
+        if (paneles == 54) {setEpcBase(3.86)}
+        if (paneles == 55) {setEpcBase(3.84)}
+        if (paneles == 56) {setEpcBase(3.81)}
+        if (paneles == 57) {setEpcBase(3.79)}
+        if (paneles == 58) {setEpcBase(3.76)}
+        if (paneles == 59) {setEpcBase(3.74)}
+        if (paneles == 60) {setEpcBase(3.72)}
+        if (paneles == 61) {setEpcBase(3.70)}
+        if (paneles == 62) {setEpcBase(3.67)}
+        if (paneles == 66) {setEpcBase(3.60)}
+        if (paneles == 67) {setEpcBase(3.58)}
+        if (paneles == 68) {setEpcBase(3.56)}
+        if (paneles == 69) {setEpcBase(3.55)}
+        if (paneles == 70) {setEpcBase(3.53)}
+        if (paneles == 71) {setEpcBase(3.51)}
+        if (paneles == 72) {setEpcBase(3.50)}
+        if (paneles == 73) {setEpcBase(3.48)}
+        if (paneles == 74) {setEpcBase(3.47)}
 
       }
-  
+
+
+      //if (bateria == "Tesla") {
+      //  
+      //  if ( cantBateria == 1 ) {
+//
+      //    if ( paneles >= 10 && paneles <= 13 ) {
+      //      setEpcBase(5)
+      //    }
+//
+      //    if ( paneles >= 14 && paneles <= 17 ) {
+      //      setEpcBase(4.5)
+      //    }
+//
+      //    if ( paneles >= 18 && paneles <= 37 ) {
+      //      setEpcBase(4)
+      //    }
+      //    
+      //  }
+//
+      //  if ( cantBateria == 2 ) {
+      //    if ( paneles >= 25 && paneles <= 65 ) {
+      //      setEpcBase(4)
+      //    }
+      //  }
+//
+      //  if ( cantBateria >= 3 ) {
+      //    setEpcBase(4)
+      //  }
+      //}
+
+      //if (bateria == "Solar_Edge") {
+      //  
+      //  if ( cantBateria == 1 ) {
+//
+      //    if ( paneles >= 10 && paneles <= 13 ) {
+      //      setEpcBase(5)
+      //    }
+//
+      //    if ( paneles >= 14 && paneles <= 17 ) {
+      //      setEpcBase(4.5)
+      //    }
+//
+      //    if ( paneles >= 18 && paneles <= 22 ) {
+      //      setEpcBase(4)
+      //    }
+      //    
+      //  }
+//
+      //  if ( cantBateria == 2 ) {
+      //    if ( paneles >= 23 && paneles <= 49 ) {
+      //      setEpcBase(4)
+      //    }
+      //    if ( paneles >= 50 ) {
+      //      setEpcBase(4)
+      //    }
+      //  }
+//
+      //}
+    
 
       // Calcularmos el Size
       setEpcTotalBase(paneles * 405)
