@@ -400,9 +400,9 @@ export default function Home() {
       baseTotal = baseTotal - 1000
     }
 
-    if (tipoTecho == "Zinc") {
-      baseTotal = baseTotal - 2000
-    }
+    //if (tipoTecho == "Zinc") {
+    //  baseTotal = baseTotal - 2000
+    //}
 
     if (epcVendido < epcBase) {
       //baseTotal = baseTotal - 5000
@@ -573,18 +573,20 @@ export default function Home() {
                 </label>
               </div>
 
-              <label className={valiCamp4 ? "error" : ""}>
-                <select
-                  name="tipoTecho"
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {setTipoTecho(e.target.value); setValiCamp4(false)}}
-                  value={tipoTecho}
-                >
-                  <option value="Cemento">Cemento</option>
-                  <option value="Zinc">Zinc</option>
-                </select>
-                <span className={tipoTecho != "" ? "activo" : ""}>Tipo de techo</span>
-              </label>
 
+              {
+              //<label className={valiCamp4 ? "error" : ""}>
+              //  <select
+              //    name="tipoTecho"
+              //    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {setTipoTecho(e.target.value); setValiCamp4(false)}}
+              //    value={tipoTecho}
+              //  >
+              //    <option value="Cemento">Cemento</option>
+              //    <option value="Zinc">Zinc</option>
+              //  </select>
+              //  <span className={tipoTecho != "" ? "activo" : ""}>Tipo de techo</span>
+              //</label>
+              }
               <button className="botonGenerar" type="button" onClick={generaCotizacion}>Generar cotización</button>
             </form>
 
