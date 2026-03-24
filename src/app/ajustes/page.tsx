@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import { rangos } from "@/app/data/ranks";
 import Image from 'next/image'
 import logoColor from "@/app/img/logoC.png";
-import logoBlanco from "@/app/img/logoB.png";
 import "./estilosajustes.css";
 
 export default function Home() {
@@ -19,23 +18,17 @@ export default function Home() {
   const [adder2, setAdder2] = useState<boolean>(false)
   const [adder3, setAdder3] = useState<boolean>(false)
   const [adder4, setAdder4] = useState<boolean>(false)
-  const [epcBase, setEpcBase] = useState<number>(0)
   const [epcTotalBase, setEpcTotalBase] = useState<number>(0)
-  const [solarAjustado, setSolarAjustado] = useState<number>(0)
-  const [epcVendido, setEpcVendido] = useState<number>(0)
   const [precioPorWatt, setPrecioPorWatt] = useState<number>(2.3)
-  const [totalComision, setTotalComision] = useState<number>(0)
-  const [tipoTecho, setTipoTecho] = useState<string>("Cemento")
   const [panelWatts, setPanelWatts] = useState<number>(410)
 
   const [comisionBateria, setComisionBateria] = useState<string>("Full commission")
   const [ventaBateria, setVentaBateria] = useState<number>(12000)
   const [venta2daBateria, setVenta2daBateria] = useState<number>(9000)
-  const [ajusteComision, setAjusteComision] = useState<number>(0)
+  const ajusteComision = 0;
 
   const [valiCamp1, setValiCamp1] = useState<boolean>(false)
   const [valiCamp2, setValiCamp2] = useState<boolean>(false)
-  const [valiCamp3, setValiCamp3] = useState<boolean>(false)
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -98,10 +91,9 @@ export default function Home() {
         };
         base = bases[paneles] || 0;
       }
-      setEpcBase(base);
       setEpcTotalBase(paneles * panelWatts);
     }
-  }, [paneles, bateria]);
+  }, [paneles, bateria, idVendedor, cantBateria, panelWatts]);
 
   // Valores calculados internos y reactivos
   const ventaPV = paneles * panelWatts * precioPorWatt;
@@ -139,32 +131,13 @@ export default function Home() {
   const handleCheck3 = (e: React.ChangeEvent<HTMLInputElement>) => setAdder3(e.target.checked);
   const handleCheck4 = (e: React.ChangeEvent<HTMLInputElement>) => setAdder4(e.target.checked);
 
-  const calcularComision = () => {
-    let baseTotal = precioPorWatt * epcTotalBase;
-    baseTotal = Math.round(baseTotal);
 
-    if (adder1) baseTotal -= 1000;
-    if (adder2) baseTotal -= 2500;
-    if (adder3) baseTotal -= 2000;
-    if (adder4) baseTotal -= 500;
-
-    setSolarAjustado(baseTotal);
-
-    const rangoSelec = rangos.find(item => item.id == idVendedor)
-    if (rangoSelec) {
-      const percent = (rangoSelec.porcentaje || 0) / 100;
-      setTotalComision(baseTotal * percent);
-    }
-  }
 
   const nuevaCotiazcion = () => {
     setIdVendedor(0);
     setPaneles(10);
     setBateria("");
     setCantBateria(1);
-    setEpcVendido(0);
-    setSolarAjustado(0);
-    setTotalComision(0);
     setAdder1(false);
     setAdder2(false);
     setAdder3(false);
