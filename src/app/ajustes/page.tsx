@@ -5,630 +5,328 @@ import { rangos } from "@/app/data/ranks";
 import Image from 'next/image'
 import logoColor from "@/app/img/logoC.png";
 import logoBlanco from "@/app/img/logoB.png";
+import "./estilosajustes.css";
 
 export default function Home() {
 
-  const [ idVendedor, setIdVendedor ] = useState<number>(0)
-  const [ paneles, setPaneles ] = useState<number>(10)
-  const [ bateria, setBateria ] = useState<string>("")
-  const [ cantBateria, setCantBateria ] = useState<number>(1)
-  const [ catnBatBloq, setCatnBatBloq ] = useState<boolean>(false)
-  const [ listOpciones, setListOpciones ] = useState<string[]>(["1"])
-  const [ adder1, setAdder1 ] = useState<boolean>(false)
-  const [ adder2, setAdder2 ] = useState<boolean>(false)
-  const [ adder3, setAdder3 ] = useState<boolean>(false)
-  const [ adder4, setAdder4 ] = useState<boolean>(false)
-  const [ calcState, setCalcState ] = useState<boolean>(false)
-  const [ epcBase, setEpcBase ] = useState<number>(0)
-  const [ epcTotalBase, setEpcTotalBase ] = useState<number>(0)
-  const [ solarAjustado, setSolarAjustado ] = useState<number>(0)
-  const [ epcVendido, setEpcVendido ] = useState<number>(0)
-  const [ totalComision, setTotalComision ] = useState<number>(0)
+  const [idVendedor, setIdVendedor] = useState<number>(0)
+  const [paneles, setPaneles] = useState<number>(10)
+  const [bateria, setBateria] = useState<string>("Tesla")
+  const [cantBateria, setCantBateria] = useState<number>(1)
+  const [catnBatBloq, setCatnBatBloq] = useState<boolean>(false)
+  const [listOpciones, setListOpciones] = useState<string[]>(["1"])
+  const [adder1, setAdder1] = useState<boolean>(false)
+  const [adder2, setAdder2] = useState<boolean>(false)
+  const [adder3, setAdder3] = useState<boolean>(false)
+  const [adder4, setAdder4] = useState<boolean>(false)
+  const [epcBase, setEpcBase] = useState<number>(0)
+  const [epcTotalBase, setEpcTotalBase] = useState<number>(0)
+  const [solarAjustado, setSolarAjustado] = useState<number>(0)
+  const [epcVendido, setEpcVendido] = useState<number>(0)
+  const [precioPorWatt, setPrecioPorWatt] = useState<number>(2.3)
+  const [totalComision, setTotalComision] = useState<number>(0)
+  const [tipoTecho, setTipoTecho] = useState<string>("Cemento")
+  const [panelWatts, setPanelWatts] = useState<number>(410)
 
-  const [ tipoTecho, setTipoTecho ] = useState<string>("Cemento")
+  const [comisionBateria, setComisionBateria] = useState<string>("Full commission")
+  const [ventaBateria, setVentaBateria] = useState<number>(12000)
+  const [venta2daBateria, setVenta2daBateria] = useState<number>(9000)
+  const [ajusteComision, setAjusteComision] = useState<number>(0)
 
-  const [ valiCamp1, setValiCamp1 ] = useState<boolean>(false)
-  const [ valiCamp2, setValiCamp2 ] = useState<boolean>(false)
-  const [ valiCamp3, setValiCamp3 ] = useState<boolean>(false)
-  const [ valiCamp4, setValiCamp4 ] = useState<boolean>(false)
+  const [valiCamp1, setValiCamp1] = useState<boolean>(false)
+  const [valiCamp2, setValiCamp2] = useState<boolean>(false)
+  const [valiCamp3, setValiCamp3] = useState<boolean>(false)
 
   const formRef = useRef<HTMLFormElement>(null);
-  const divRef = useRef<HTMLDivElement>(null);
-  const [altura, setAltura] = useState(0);
-
-
-
-  useEffect(() => {
-    setTimeout(() => {
-      if (formRef.current) {
-        setAltura(formRef.current.offsetHeight);
-      }
-    }, 50)
-  }, []);
-
 
   // Verificacion si la cantidad de paneles es menor a 10
-
-  useEffect(()=>{
-
-    if (paneles < 10) {
-      setValiCamp2(true)
-    } else {
-      setValiCamp2(false)
-    }
-
-  },[paneles])
-
-
-
-  // Lógica de cantidad de baterias vs cantidad de paneles segun el tipo de batería
   useEffect(() => {
+    setValiCamp2(paneles < 10);
+  }, [paneles])
 
-    // Effect número de baterias
-    //if (bateria == "Tesla") {
+  // Lógica de cantidad de baterias vs cantidad de paneles
+  useEffect(() => {
+    if (paneles <= 23) {
+      setCantBateria(1)
+      setCatnBatBloq(true)
+      setListOpciones(["1"])
+    } else if (paneles >= 25 && paneles <= 30) {
+      setCantBateria(2)
+      setCatnBatBloq(false)
+      setListOpciones(["1", "2"])
+    } else if (paneles >= 31 && paneles <= 49) {
+      setCantBateria(2)
+      setCatnBatBloq(true)
+      setListOpciones(["2"])
+    } else if (paneles >= 50) {
+      setCantBateria(3)
+      setCatnBatBloq(false)
+      setListOpciones(["2", "3"])
+    }
+  }, [paneles]);
 
-      if (paneles <= 23) {
-        // Obligatorio 1
-        setCantBateria(1)
-        setCatnBatBloq(true)
-        setListOpciones(["1"])
+  // Lógica de valores de venta de batería segun el tipo de comisión
+  useEffect(() => {
+    const mapping: Record<string, { v1: number, v2: number }> = {
+      "Full commission": { v1: 12000, v2: 9000 },
+      "Flat fee $1,000": { v1: 11000, v2: 8500 },
+      "Flat fee $500": { v1: 10000, v2: 7600 },
+      "No comisionable": { v1: 9300, v2: 6750 }
+    };
+    const values = mapping[comisionBateria] || mapping["Full commission"];
+    setVentaBateria(values.v1);
+    setVenta2daBateria(values.v2);
+  }, [comisionBateria]);
+
+  // Cálculo automático de EPC Base
+  useEffect(() => {
+    if (idVendedor != 0 && bateria != "" && paneles >= 10) {
+      let base = 0;
+      if (cantBateria == 1) {
+        const bases: Record<number, number> = {
+          10: 5.36, 11: 5.09, 12: 4.87, 13: 4.68, 14: 4.52, 15: 4.38, 16: 4.25, 17: 4.14, 18: 4.05, 19: 3.96, 20: 3.88, 21: 3.81, 22: 3.75, 23: 3.69, 24: 3.63, 25: 3.59, 26: 3.54, 27: 3.50, 28: 3.46, 29: 3.42, 30: 3.39
+        };
+        base = bases[paneles] || 0;
+      } else if (cantBateria == 2) {
+        const bases: Record<number, number> = {
+          24: 4.66, 25: 4.57, 26: 4.49, 27: 4.41, 28: 4.34, 29: 4.27, 30: 4.21, 31: 4.15, 32: 4.10, 33: 4.05, 34: 4.00, 35: 3.95, 36: 3.91, 37: 3.87, 38: 3.83, 39: 3.79, 40: 3.76, 41: 3.72, 42: 3.69, 43: 3.66, 44: 3.63, 45: 3.61, 46: 3.58, 47: 3.56, 48: 3.53, 49: 3.51, 50: 3.49, 51: 3.47, 52: 3.44, 53: 3.42, 54: 3.41, 55: 3.39, 56: 3.37, 57: 3.35, 58: 3.34, 59: 3.32, 60: 3.31, 61: 3.29, 62: 3.28, 66: 3.22, 67: 3.21, 68: 3.20, 69: 3.19, 70: 3.18, 71: 3.17, 72: 3.15, 73: 3.14, 74: 3.13
+        };
+        base = bases[paneles] || 0;
+      } else if (cantBateria >= 3) {
+        const bases: Record<number, number> = {
+          50: 3.98, 51: 3.95, 52: 3.92, 53: 3.89, 54: 3.86, 55: 3.84, 56: 3.81, 57: 3.79, 58: 3.76, 59: 3.74, 60: 3.72, 61: 3.70, 62: 3.67, 66: 3.60, 67: 3.58, 68: 3.56, 69: 3.55, 70: 3.53, 71: 3.51, 72: 3.50, 73: 3.48, 74: 3.47
+        };
+        base = bases[paneles] || 0;
       }
-
-      if (paneles >= 25 && paneles <= 30) {
-        // Opcional 2
-        setCantBateria(2)
-        setCatnBatBloq(false)
-        setListOpciones(["1", "2"])
-      }
-
-
-      if (paneles >= 31 && paneles <= 49) {
-        // Obligatorio 2
-        setCantBateria(2)
-        setCatnBatBloq(true)
-        setListOpciones(["2"])
-      }
-
-      if (paneles >= 50) {
-        // Opcional 3
-        setCantBateria(3)
-        setCatnBatBloq(false)
-        setListOpciones(["2", "3"])
-      }
-
-      //if (paneles >= 62 && paneles <= 73) {
-      //  // Obligatorio 3
-      //  setCantBateria(3)
-      //  setCatnBatBloq(true)
-      //  setListOpciones(["3"])
-      //}
-//
-      //if (paneles >= 74) {
-      //  // Opcional 4
-      //  setCantBateria(4)
-      //  setCatnBatBloq(false)
-      //  setListOpciones(["3", "4"])
-      //}
-    //}
-
-    //if (bateria == "Solar_Edge") {
-    //  
-    //  if (paneles <= 25) {
-    //    // Obligatorio 1
-    //    setCantBateria(1)
-    //    setCatnBatBloq(true)
-    //    setListOpciones(["1"])
-    //  }
-//
-    //  if (paneles >= 26 && paneles <= 37) {
-    //    // Opcional 2
-    //    setCantBateria(2)
-    //    setCatnBatBloq(false)
-    //    setListOpciones(["1", "2"])
-    //  }
-//
-    //  if (paneles >= 38) {
-    //    // Obligatorio 2
-    //    setCantBateria(2)
-    //    setCatnBatBloq(true)
-    //    setListOpciones(["2"])
-    //  }
-//
-    //}
-//
-
-
+      setEpcBase(base);
+      setEpcTotalBase(paneles * panelWatts);
+    }
   }, [paneles, bateria]);
 
-  // Funcionalidad de Checkboxes
-  const handleCheck1 = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAdder1(e.target.checked)
-  };
-  const handleCheck2 = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAdder2(e.target.checked)
-  };
-  const handleCheck3 = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAdder3(e.target.checked)
-  };
-   const handleCheck4 = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAdder4(e.target.checked)
-  };
+  // Valores calculados internos y reactivos
+  const ventaPV = paneles * panelWatts * precioPorWatt;
 
-  // Funcionalidad de botones
-  const generaCotizacion = ()=>{
-    
-    // Verificación de campos
+  const battCommable = comisionBateria === "Full commission" ? 1440 :
+    comisionBateria === "Flat fee $1,000" ? 1000 :
+      comisionBateria === "Flat fee $500" ? 500 : 0;
 
-    setValiCamp1(idVendedor == 0);
-    setValiCamp2(paneles < 10 || paneles == null);
-    setValiCamp3(bateria == "");
-    setValiCamp4(tipoTecho == "");
+  const expansionCommable = paneles < 30 ? 0 :
+    comisionBateria === "Full commission" ? 1480 :
+      comisionBateria === "Flat fee $1,000" ? 1000 :
+        comisionBateria === "Flat fee $500" ? 500 : 0;
 
-    console.log(paneles < 10 || paneles == null);
-    
+  const venta2daEfectiva = (paneles >= 30 && cantBateria >= 2) ? venta2daBateria : 0;
 
-    if (!valiCamp1 && !valiCamp2 && !valiCamp3 && !valiCamp4 && idVendedor != 0 && bateria != "" && tipoTecho != "" && (paneles >= 10 || paneles != null) ) {
-      
-      
-      if (divRef.current) {
-        setAltura(divRef.current.offsetHeight);
-      }
+  const sumAdders = (adder1 ? 1000 : 0) + (adder2 ? 2500 : 0) + (adder3 ? 2000 : 0) + (adder4 ? 500 : 0);
 
-      setCalcState(true)
+  const ventaTotal = ventaPV + ventaBateria + venta2daEfectiva + sumAdders;
 
-      // Establecemos el EPC Base segun tipo de batería y cantidad de baterias
+  const montoComisionable = ventaPV + ajusteComision + (battCommable > 1000 ? ventaBateria : 0) + (expansionCommable > 1000 ? venta2daEfectiva : 0);
 
+  const commissionRatePercent = rangos.find(r => r.id === idVendedor)?.porcentaje || 0;
+  const commissionRateDecimal = commissionRatePercent / 100;
 
-      if ( cantBateria == 1 ) {
-        //if ( paneles >= 10 && paneles <= 13 ) {
-        //  setEpcBase(5)
-        //}
-        //if ( paneles >= 14 && paneles <= 17 ) {
-        //  setEpcBase(4.5)
-        //}
-        //if ( paneles >= 18 && paneles <= 37 ) {
-        //  setEpcBase(4)
-        //}
-        
-       
-        if (paneles == 10) {setEpcBase(5.36)}
-        if (paneles == 11) {setEpcBase(5.09)}
-        if (paneles == 12) {setEpcBase(4.87)}
-        if (paneles == 13) {setEpcBase(4.68)}
-        if (paneles == 14) {setEpcBase(4.52)}
-        if (paneles == 15) {setEpcBase(4.38)}
-        if (paneles == 16) {setEpcBase(4.25)}
-        if (paneles == 17) {setEpcBase(4.14)}
-        if (paneles == 18) {setEpcBase(4.05)}
-        if (paneles == 19) {setEpcBase(3.96)}
-        if (paneles == 20) {setEpcBase(3.88)}
-        if (paneles == 21) {setEpcBase(3.81)}
-        if (paneles == 22) {setEpcBase(3.75)}
-        if (paneles == 23) {setEpcBase(3.69)}
-        if (paneles == 24) {setEpcBase(3.63)}
-        if (paneles == 25) {setEpcBase(3.59)}
-        if (paneles == 26) {setEpcBase(3.54)}
-        if (paneles == 27) {setEpcBase(3.50)}
-        if (paneles == 28) {setEpcBase(3.46)}
-        if (paneles == 29) {setEpcBase(3.42)}
-        if (paneles == 30) {setEpcBase(3.39)}
+  const comisionFinal = (montoComisionable * commissionRateDecimal) +
+    (battCommable === 500 ? 500 : 0) +
+    (battCommable === 1000 ? 1000 : 0) +
+    (expansionCommable === 500 ? 500 : 0) +
+    (expansionCommable === 1000 ? 100 : 0);
 
+  const epcCalculado = epcTotalBase > 0 ? ventaTotal / epcTotalBase : 0;
 
-      }
+  const handleCheck1 = (e: React.ChangeEvent<HTMLInputElement>) => setAdder1(e.target.checked);
+  const handleCheck2 = (e: React.ChangeEvent<HTMLInputElement>) => setAdder2(e.target.checked);
+  const handleCheck3 = (e: React.ChangeEvent<HTMLInputElement>) => setAdder3(e.target.checked);
+  const handleCheck4 = (e: React.ChangeEvent<HTMLInputElement>) => setAdder4(e.target.checked);
 
-      if ( cantBateria == 2 ) {
-        //if ( paneles >= 25 && paneles <= 65 ) {
-        //  setEpcBase(4)
-        //}
-        if(paneles == 24) {setEpcBase(4.66)}
-        if(paneles == 25) {setEpcBase(4.57)}
-        if(paneles == 26) {setEpcBase(4.49)}
-        if(paneles == 27) {setEpcBase(4.41)}
-        if(paneles == 28) {setEpcBase(4.34)}
-        if(paneles == 29) {setEpcBase(4.27)}
-        if(paneles == 30) {setEpcBase(4.21)}
-        if(paneles == 31) {setEpcBase(4.15)}
-        if(paneles == 32) {setEpcBase(4.10)}
-        if(paneles == 33) {setEpcBase(4.05)}
-        if(paneles == 34) {setEpcBase(4.00)}
-        if(paneles == 35) {setEpcBase(3.95)}
-        if(paneles == 36) {setEpcBase(3.91)}
-        if(paneles == 37) {setEpcBase(3.87)}
-        if(paneles == 38) {setEpcBase(3.83)}
-        if(paneles == 39) {setEpcBase(3.79)}
-        if(paneles == 40) {setEpcBase(3.76)}
-        if(paneles == 41) {setEpcBase(3.72)}
-        if(paneles == 42) {setEpcBase(3.69)}
-        if(paneles == 43) {setEpcBase(3.66)}
-        if(paneles == 44) {setEpcBase(3.63)}
-        if(paneles == 45) {setEpcBase(3.61)}
-        if(paneles == 46) {setEpcBase(3.58)}
-        if(paneles == 47) {setEpcBase(3.56)}
-        if(paneles == 48) {setEpcBase(3.53)}
-        if(paneles == 49) {setEpcBase(3.51)}
-        if(paneles == 50) {setEpcBase(3.49)}
-        if(paneles == 51) {setEpcBase(3.47)}
-        if(paneles == 52) {setEpcBase(3.44)}
-        if(paneles == 53) {setEpcBase(3.42)}
-        if(paneles == 54) {setEpcBase(3.41)}
-        if(paneles == 55) {setEpcBase(3.39)}
-        if(paneles == 56) {setEpcBase(3.37)}
-        if(paneles == 57) {setEpcBase(3.35)}
-        if(paneles == 58) {setEpcBase(3.34)}
-        if(paneles == 59) {setEpcBase(3.32)}
-        if(paneles == 60) {setEpcBase(3.31)}
-        if(paneles == 61) {setEpcBase(3.29)}
-        if(paneles == 62) {setEpcBase(3.28)}
-        if(paneles == 66) {setEpcBase(3.22)}
-        if(paneles == 67) {setEpcBase(3.21)}
-        if(paneles == 68) {setEpcBase(3.20)}
-        if(paneles == 69) {setEpcBase(3.19)}
-        if(paneles == 70) {setEpcBase(3.18)}
-        if(paneles == 71) {setEpcBase(3.17)}
-        if(paneles == 72) {setEpcBase(3.15)}
-        if(paneles == 73) {setEpcBase(3.14)}
-        if(paneles == 74) {setEpcBase(3.13)}
+  const calcularComision = () => {
+    let baseTotal = precioPorWatt * epcTotalBase;
+    baseTotal = Math.round(baseTotal);
 
-      }
+    if (adder1) baseTotal -= 1000;
+    if (adder2) baseTotal -= 2500;
+    if (adder3) baseTotal -= 2000;
+    if (adder4) baseTotal -= 500;
 
-      if ( cantBateria >= 3 ) {
-        //setEpcBase(4)
-
-        if (paneles == 50) {setEpcBase(3.98)}
-        if (paneles == 51) {setEpcBase(3.95)}
-        if (paneles == 52) {setEpcBase(3.92)}
-        if (paneles == 53) {setEpcBase(3.89)}
-        if (paneles == 54) {setEpcBase(3.86)}
-        if (paneles == 55) {setEpcBase(3.84)}
-        if (paneles == 56) {setEpcBase(3.81)}
-        if (paneles == 57) {setEpcBase(3.79)}
-        if (paneles == 58) {setEpcBase(3.76)}
-        if (paneles == 59) {setEpcBase(3.74)}
-        if (paneles == 60) {setEpcBase(3.72)}
-        if (paneles == 61) {setEpcBase(3.70)}
-        if (paneles == 62) {setEpcBase(3.67)}
-        if (paneles == 66) {setEpcBase(3.60)}
-        if (paneles == 67) {setEpcBase(3.58)}
-        if (paneles == 68) {setEpcBase(3.56)}
-        if (paneles == 69) {setEpcBase(3.55)}
-        if (paneles == 70) {setEpcBase(3.53)}
-        if (paneles == 71) {setEpcBase(3.51)}
-        if (paneles == 72) {setEpcBase(3.50)}
-        if (paneles == 73) {setEpcBase(3.48)}
-        if (paneles == 74) {setEpcBase(3.47)}
-
-      }
-
-
-      //if (bateria == "Tesla") {
-      //  
-      //  if ( cantBateria == 1 ) {
-//
-      //    if ( paneles >= 10 && paneles <= 13 ) {
-      //      setEpcBase(5)
-      //    }
-//
-      //    if ( paneles >= 14 && paneles <= 17 ) {
-      //      setEpcBase(4.5)
-      //    }
-//
-      //    if ( paneles >= 18 && paneles <= 37 ) {
-      //      setEpcBase(4)
-      //    }
-      //    
-      //  }
-//
-      //  if ( cantBateria == 2 ) {
-      //    if ( paneles >= 25 && paneles <= 65 ) {
-      //      setEpcBase(4)
-      //    }
-      //  }
-//
-      //  if ( cantBateria >= 3 ) {
-      //    setEpcBase(4)
-      //  }
-      //}
-
-      //if (bateria == "Solar_Edge") {
-      //  
-      //  if ( cantBateria == 1 ) {
-//
-      //    if ( paneles >= 10 && paneles <= 13 ) {
-      //      setEpcBase(5)
-      //    }
-//
-      //    if ( paneles >= 14 && paneles <= 17 ) {
-      //      setEpcBase(4.5)
-      //    }
-//
-      //    if ( paneles >= 18 && paneles <= 22 ) {
-      //      setEpcBase(4)
-      //    }
-      //    
-      //  }
-//
-      //  if ( cantBateria == 2 ) {
-      //    if ( paneles >= 23 && paneles <= 49 ) {
-      //      setEpcBase(4)
-      //    }
-      //    if ( paneles >= 50 ) {
-      //      setEpcBase(4)
-      //    }
-      //  }
-//
-      //}
-    
-
-      // Calcularmos el Size
-      setEpcTotalBase(paneles * 405)
-      setEpcVendido(0)
-      setSolarAjustado(0)
-      setTotalComision(0)
-
-    }
-  }
-
-
-  const calcularComision = () =>{
-
-
-    setTimeout(() => {
-      if (divRef.current) {
-        setAltura(divRef.current.offsetHeight);
-      }
-    }, 50);
-
-    // solar ajustado al epc vendido
-    let baseTotal = epcVendido * epcTotalBase
-
-    baseTotal = Math.round(baseTotal)
-
-
-    if (adder1) { // Lowfico, Cablería, Tubo, Zanja, Breaker & Equipo existente
-      baseTotal = baseTotal - 1000
-    }
-
-    if (adder2) { // Sellado de Techo
-      baseTotal = baseTotal - 2500
-    }
-
-    if (adder3) { // Galvalum y refuerzo de techo
-      baseTotal = baseTotal - 2000
-    }
-
-    if (adder4) { // UP Front Payment
-      baseTotal = baseTotal - 1000
-    }
-
-    //if (tipoTecho == "Zinc") {
-    //  baseTotal = baseTotal - 2000
-    //}
-
-    if (epcVendido < epcBase) {
-      //baseTotal = baseTotal - 5000
-      console.log("menor");
-    }
-
-    const totalBaseDesc = baseTotal
-    setSolarAjustado(totalBaseDesc)
-
-    
-
-
-
-    //r - % de comision = comision
-
+    setSolarAjustado(baseTotal);
 
     const rangoSelec = rangos.find(item => item.id == idVendedor)
-
-    if (rangoSelec && typeof rangoSelec.porcentaje === 'number') {
-      const percent = rangoSelec.porcentaje / 100;
-      //setTotalComision(Math.round(totalBaseDesc * percent));
-      setTotalComision(totalBaseDesc * percent);
-    } else {
-      console.error('No se encontró el rango o porcentaje inválido');
-      setTotalComision(0); // o maneja el error como prefieras
-    }
-    
-
-  }
-
-  const modificaValores = ()=>{
-    setCalcState(false)
-    if (formRef.current) {
-      setAltura(formRef.current.offsetHeight);
+    if (rangoSelec) {
+      const percent = (rangoSelec.porcentaje || 0) / 100;
+      setTotalComision(baseTotal * percent);
     }
   }
 
-  const nuevaCotiazcion = ()=>{
-    setCalcState(false)
-    setEpcVendido(0)
-    setSolarAjustado(0)
-    setTotalComision(0)
-    setPaneles(10)
-    setBateria("")
-    setCantBateria(1)
-    setAdder1(false)
-    setAdder2(false)
-    setIdVendedor(0)
-    setEpcBase(0)
-    setTipoTecho("Cemento")
-    if (formRef.current) {
-      setAltura(formRef.current.offsetHeight);
-    }
+  const nuevaCotiazcion = () => {
+    setIdVendedor(0);
+    setPaneles(10);
+    setBateria("");
+    setCantBateria(1);
+    setEpcVendido(0);
+    setSolarAjustado(0);
+    setTotalComision(0);
+    setAdder1(false);
+    setAdder2(false);
+    setAdder3(false);
+    setAdder4(false);
   }
-
-  // verificar si es client o no
 
   const [isClient, setIsClient] = useState(false);
+  useEffect(() => setIsClient(true), []);
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  if (!isClient) return null;
 
-  return isClient ? (
-    
-    <div className={calcState ? "activo contenedor" : "contenedor"}>
+  return (
+    <div className="contenedor">
       <div className="sec">
         <div className="logo">
-          <Image
-            src={logoColor}
-            width={200}
-            height={100}
-            alt="Logo Up Home Solution."
-            className="logoColor"
-          />
-          <Image
-            src={logoBlanco}
-            width={200}
-            height={100}
-            alt="Logo Up Home Solution blanco."
-            className="logoBlanco"
-          />
+          <Image src={logoColor} width={200} height={100} alt="Logo Up Home Solution" className="logoColor" />
         </div>
-        <div className="bloqueForm" style={{ height: `${altura + 60}px` }}>
-            <form onSubmit={(e) => e.preventDefault()} ref={formRef}>
-              <label className={valiCamp1 ? "error" : ""}>
-                <select name="tipoVendedor" value={idVendedor} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {setIdVendedor(parseInt(e.target.value)); setValiCamp1(false)}}>
-                  <option value="0"></option>
-                  {rangos.map((item) => (
-                    <option key={item.id} value={item.id}>{item.nombre}</option>
-                  ))}
+        <div className="card">
+          <form onSubmit={(e) => e.preventDefault()} ref={formRef}>
+
+            {/* Section 1 — Datos de Entrada */}
+            <p className="sectionSubtitle">Datos de Entrada</p>
+            <div className="inputGrid">
+              <label>
+                <span className="labelTitle">Panel Watts</span>
+                <select value={panelWatts} onChange={(e) => setPanelWatts(parseInt(e.target.value))}>
+                  <option value="410">410 W</option>
                 </select>
-                <span className={idVendedor != 0 ? "activo" : ""}>Rango de Vendedor</span>
               </label>
 
               <label className={valiCamp2 ? "error" : ""}>
-                  <input
-                    type="number"
-                    name="paneles"
-                    min="10"
-                    max="75"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setPaneles(parseInt(e.target.value))}}
-                    value={paneles}
-                  />
-                  <span className={paneles != 0 ? "activo" : ""}>Cantidad de Paneles</span>
+                <span className="labelTitle">Cantidad de Paneles</span>
+                <input
+                  type="number"
+                  min="10"
+                  max="75"
+                  value={paneles}
+                  onChange={(e) => setPaneles(parseInt(e.target.value) || 0)}
+                  onBlur={() => { if (paneles < 10) setPaneles(10) }}
+                />
               </label>
 
-              <label className={valiCamp3 ? "error" : ""}>
-                  <select name="tipoBateria" value={bateria} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {setBateria(e.target.value); setValiCamp3(false)}}>
-                    <option value=""></option>
-                    <option value="Solar_Edge">S. Edge</option>
-                    <option value="Tesla">Tesla</option>
-                  </select>
-                  <span className={bateria != "" ? "activo" : ""}>Tipo de Batería</span>
-              </label>
-                  
               <label>
-                <select
-                  name="numeroBaterias"
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {setCantBateria(parseInt(e.target.value))}}
-                  disabled={catnBatBloq}
-                  value={cantBateria}
-                >
-                  {listOpciones.map(item=>(
-                    <option value={item} key={item}>{item}</option>
+                <span className="labelTitle">Precio por Watt ($)</span>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="2.3"
+                  max="6"
+                  value={precioPorWatt}
+                  onChange={(e) => setPrecioPorWatt(parseFloat(e.target.value))}
+                />
+              </label>
+
+              <label>
+                <span className="labelTitle">Comisión Batería</span>
+                <select value={comisionBateria} onChange={(e) => setComisionBateria(e.target.value)}>
+                  <option value="No comisionable">No comisionable</option>
+                  <option value="Flat fee $500">Flat fee $500</option>
+                  <option value="Flat fee $1,000">Flat fee $1,000</option>
+                  <option value="Full commission">Full commission</option>
+                </select>
+              </label>
+
+              <label className={valiCamp1 ? "error" : ""}>
+                <span className="labelTitle">% de Comisión</span>
+                <select value={idVendedor} onChange={(e) => { setIdVendedor(parseInt(e.target.value)); setValiCamp1(false) }}>
+                  <option value="0">Seleccionar...</option>
+                  {rangos.map((item) => (
+                    <option key={item.id} value={item.id}>{item.porcentaje}%</option>
                   ))}
                 </select>
-                <span className={cantBateria != 0 ? "activo" : ""}>Número de Baterías</span>
               </label>
-              
-              <div className="selectores">
-                <p>Seleciona los adders (opcional)</p>
-                <label>
-                  <input
-                    type="checkbox"
-                    name="adder1"
-                    onChange={handleCheck4}
-                    checked={adder4}
-                  />
-                  <span>UP Front Payment</span>
-                </label> 
-                <label>
-                  <input
-                    type="checkbox"
-                    name="adder1"
-                    onChange={handleCheck1}
-                    checked={adder1}
-                  />
-                  <span>Lowfico, Cablería, Tubo, Zanja, Breaker & Equipo existente</span>
-                </label> 
-                <label>
-                  <input
-                    type="checkbox"
-                    name="adder1"
-                    onChange={handleCheck3}
-                    checked={adder3}
-                  />
-                  <span>Galvalum y Refuerzo de techo</span>
-                </label> 
-                <label>
-                  <input
-                    type="checkbox"
-                    name="adder2"
-                    onChange={handleCheck2}
-                    checked={adder2}
-                  />
-                  <span>Sellado de Techo</span>
+
+              {/* Adders Section */}
+              <p className="labelTitle" style={{ gridColumn: '1 / -1', marginTop: '10px', marginBottom: '4px' }}>Adders</p>
+              <div className="addersGrid">
+                <label className="checkboxLabel">
+                  <input type="checkbox" checked={adder4} onChange={handleCheck4} />
+                  <div className="customCheck">UP Front Payment</div>
+                </label>
+                <label className="checkboxLabel">
+                  <input type="checkbox" checked={adder1} onChange={handleCheck1} />
+                  <div className="customCheck">Lowfico, Cablería, Tubo...</div>
+                </label>
+                <label className="checkboxLabel" style={{ display: 'none' }}>
+                  <input type="checkbox" checked={adder3} onChange={handleCheck3} />
+                  <div className="customCheck">Galvalum y Refuerzo</div>
+                </label>
+                <label className="checkboxLabel" style={{ display: 'none' }}>
+                  <input type="checkbox" checked={adder2} onChange={handleCheck2} />
+                  <div className="customCheck">Sellado de Techo</div>
                 </label>
               </div>
 
+              {/* Hidden Fields (keeping logic) */}
+              <label style={{ display: 'none' }}>
+                <select value={cantBateria} disabled={catnBatBloq} onChange={(e) => setCantBateria(parseInt(e.target.value))}>
+                  {listOpciones.map(item => <option value={item} key={item}>{item}</option>)}
+                </select>
+              </label>
+            </div>
 
-              {
-              //<label className={valiCamp4 ? "error" : ""}>
-              //  <select
-              //    name="tipoTecho"
-              //    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {setTipoTecho(e.target.value); setValiCamp4(false)}}
-              //    value={tipoTecho}
-              //  >
-              //    <option value="Cemento">Cemento</option>
-              //    <option value="Zinc">Zinc</option>
-              //  </select>
-              //  <span className={tipoTecho != "" ? "activo" : ""}>Tipo de techo</span>
-              //</label>
-              }
-              <button className="botonGenerar" type="button" onClick={generaCotizacion}>Generar cotización</button>
-            </form>
+            {/* Section intermedia — Sistema */}
+            <p className="sectionSubtitle">Sistema</p>
+            <div className="statusGrid">
+              <div className="statusItem">
+                <span className="statusLabel">Tamaño de Sistema Watts</span>
+                <span className="statusValue">{epcTotalBase} W</span>
+              </div>
+            </div>
 
-          <div className="visualizador" ref={divRef}>
-                <div className="epcBase">
-                  <p>EPC Base</p>
-                  <p>${epcBase}</p>
+            {/* Section 2 — Resultados */}
+            <div className="resultsSection">
+              <p className="sectionSubtitle">Resultados</p>
+              <div className="statusGrid">
+                <div className="statusItem">
+                  <span className="statusLabel">Venta PV</span>
+                  <span className="statusValue">${ventaPV.toLocaleString()}</span>
                 </div>
-
-                <label className="epcVendido">
-                  <span>EPC Vendido</span>
-                  <input type="number"  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setEpcVendido(parseFloat(e.target.value))}} value={epcVendido}/>
-                </label>
-
-                <button className="calculaCom" type="button" onClick={calcularComision}>Calcular comisión</button>
-
-                {solarAjustado > 0 ? (
-                  <>
-                  <div className="epctotal" style={{display: "none"}}>
-                    <p>Total Solar Ajustado</p>
-                    <p>${solarAjustado}</p>
+                <div className="statusItem">
+                  <span className="statusLabel">Venta Batería</span>
+                  <span className="statusValue">${ventaBateria.toLocaleString()}</span>
+                </div>
+                {venta2daEfectiva > 0 && (
+                  <div className="statusItem animateFade">
+                    <span className="statusLabel">Venta 2da Batería</span>
+                    <span className="statusValue">${venta2daEfectiva.toLocaleString()}</span>
                   </div>
-                  
-
-                  <div className="comision">
-                    <p>Comisión del %</p>
-                    <p>${totalComision}</p>
+                )}
+                <div className="statusItem highlight">
+                  <span className="statusLabel">Venta Total</span>
+                  <span className="statusValue">${ventaTotal.toLocaleString()}</span>
+                </div>
+                <div className="statusItem">
+                  <span className="statusLabel">Monto Comisionable</span>
+                  <span className="statusValue">${montoComisionable.toLocaleString()}</span>
+                </div>
+                <div className="statusItem highlight">
+                  <span className="statusLabel">EPC $ x Watt</span>
+                  <span className="statusValue">${epcCalculado.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                </div>
+                {comisionBateria === "Full commission" && (
+                  <div className="statusItem accentBox animateFade">
+                    <span className="statusLabel">Ganancia Híbrida</span>
+                    <span className="statusValue">${(((precioPorWatt - 2.30) * epcTotalBase) / 70).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
-                  </>
-                ): (<p>EPC Vendido demasiado bajo.</p>)}
+                )}
+                <div className="statusItem commissionBox animateFade">
+                  <span className="statusLabel">Comisión</span>
+                  <span className="statusValue">${comisionFinal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                </div>
+              </div>
 
-
-                
-
-                <p>Valor estimado de comision. (Puede variar respecto a la comision real)</p>
-
-                <button className="accionAtras" type="button" onClick={modificaValores}>Modificar valores</button>
-                <button className="accionAtras" type="button" onClick={nuevaCotiazcion}>Nueva cotización</button>
-                
-          </div>
+              <footer className="footerInfo">
+                <p>Valor estimado de comisión. Puede variar respecto a la comisión real.</p>
+                <button className="btnSecondary" type="button" onClick={nuevaCotiazcion}>Nueva cotización</button>
+              </footer>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  ) : null
+  );
 }
