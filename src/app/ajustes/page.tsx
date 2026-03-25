@@ -21,10 +21,11 @@ export default function Home() {
   const [epcTotalBase, setEpcTotalBase] = useState<number>(0)
   const [precioPorWatt, setPrecioPorWatt] = useState<number>(2.3)
   const [panelWatts, setPanelWatts] = useState<number>(410)
+  const [añadirExpansion, setAñadirExpansion] = useState<string>("")
 
   const [comisionBateria, setComisionBateria] = useState<string>("Full commission")
   const [ventaBateria, setVentaBateria] = useState<number>(12000)
-  const [venta2daBateria, setVenta2daBateria] = useState<number>(9000)
+  const [ventaExpansion, setVentaExpansion] = useState<number>(9000)
   const ajusteComision = 0;
 
   const [valiCamp1, setValiCamp1] = useState<boolean>(false)
@@ -68,7 +69,7 @@ export default function Home() {
     };
     const values = mapping[comisionBateria] || mapping["Full commission"];
     setVentaBateria(values.v1);
-    setVenta2daBateria(values.v2);
+    setVentaExpansion(values.v2);
   }, [comisionBateria]);
 
   // Cálculo automático de EPC Base
@@ -85,18 +86,17 @@ export default function Home() {
     comisionBateria === "Flat fee $1,000" ? 1000 :
       comisionBateria === "Flat fee $500" ? 500 : 0;
 
-  const expansionCommable = paneles < 30 ? 0 :
-    comisionBateria === "Full commission" ? 1480 :
-      comisionBateria === "Flat fee $1,000" ? 1000 :
-        comisionBateria === "Flat fee $500" ? 500 : 0;
 
-  const venta2daEfectiva = (paneles >= 30 && cantBateria >= 2) ? venta2daBateria : 0;
+  const ventaExpansionEfectiva =
+    añadirExpansion === "" ? 0 :
+      añadirExpansion === "1" ? ventaExpansion :
+        añadirExpansion === "2" ? ventaExpansion * 2 : 0;
 
   const sumAdders = (adder1 ? 1000 : 0) + (adder2 ? 2500 : 0) + (adder3 ? 2000 : 0) + (adder4 ? 500 : 0);
 
-  const ventaTotal = ventaPV + ventaBateria + venta2daEfectiva + sumAdders;
+  const ventaTotal = ventaPV + ventaBateria + ventaExpansionEfectiva + sumAdders;
 
-  const montoComisionable = ventaPV + ajusteComision + (battCommable > 1000 ? ventaBateria : 0) + (expansionCommable > 1000 ? venta2daEfectiva : 0);
+  const montoComisionable = ventaPV + ajusteComision + (battCommable > 1000 ? ventaBateria : 0) + ventaExpansionEfectiva;
 
   const commissionRatePercent = rangos.find(r => r.id === idVendedor)?.porcentaje || 0;
   const commissionRateDecimal = commissionRatePercent / 100;
@@ -104,8 +104,7 @@ export default function Home() {
   const comisionFinal = (montoComisionable * commissionRateDecimal) +
     (battCommable === 500 ? 500 : 0) +
     (battCommable === 1000 ? 1000 : 0) +
-    (expansionCommable === 500 ? 500 : 0) +
-    (expansionCommable === 1000 ? 100 : 0);
+    (battCommable === 1000 ? 1000 : 0);
 
   const epcCalculado = epcTotalBase > 0 ? ventaTotal / epcTotalBase : 0;
 
@@ -125,6 +124,7 @@ export default function Home() {
     setAdder2(false);
     setAdder3(false);
     setAdder4(false);
+    setAñadirExpansion("");
   }
 
   const [isClient, setIsClient] = useState(false);
@@ -195,10 +195,19 @@ export default function Home() {
                 </select>
               </label>
 
+              <label>
+                <span className="labelTitle">Añadir Expansión +</span>
+                <select value={añadirExpansion} onChange={(e) => setAñadirExpansion(e.target.value)}>
+                  <option value="">Seleccionar...</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
+              </label>
+
               {/* Adders Section */}
               <p className="labelTitle" style={{ gridColumn: '1 / -1', marginTop: '10px', marginBottom: '4px' }}>Adders</p>
               <div className="addersGrid">
-                <label className="checkboxLabel">
+                <label className="checkboxLabel" style={{ display: 'none' }}>
                   <input type="checkbox" checked={adder4} onChange={handleCheck4} />
                   <div className="customCheck">UP Front Payment</div>
                 </label>
@@ -245,10 +254,10 @@ export default function Home() {
                   <span className="statusLabel">Venta Batería</span>
                   <span className="statusValue">${ventaBateria.toLocaleString()}</span>
                 </div>
-                {venta2daEfectiva > 0 && (
+                {ventaExpansionEfectiva > 0 && (
                   <div className="statusItem animateFade">
-                    <span className="statusLabel">Venta 2da Batería</span>
-                    <span className="statusValue">${venta2daEfectiva.toLocaleString()}</span>
+                    <span className="statusLabel">Venta Expansión</span>
+                    <span className="statusValue">${ventaExpansionEfectiva.toLocaleString()}</span>
                   </div>
                 )}
                 <div className="statusItem highlight">
@@ -259,19 +268,23 @@ export default function Home() {
                   <span className="statusLabel">Monto Comisionable</span>
                   <span className="statusValue">${montoComisionable.toLocaleString()}</span>
                 </div>
-                <div className="statusItem highlight">
-                  <span className="statusLabel">EPC $ x Watt</span>
-                  <span className="statusValue">${epcCalculado.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                </div>
                 {comisionBateria === "Full commission" && (
                   <div className="statusItem accentBox animateFade">
                     <span className="statusLabel">Ganancia Híbrida</span>
                     <span className="statusValue">${(((precioPorWatt - 2.30) * epcTotalBase) / 70).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                   </div>
                 )}
-                <div className="statusItem commissionBox animateFade">
-                  <span className="statusLabel">Comisión</span>
-                  <span className="statusValue">${comisionFinal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+              </div>
+
+              {/* Heroes destacados */}
+              <div className="heroGrid">
+                <div className="epcHero">
+                  <span className="epcHeroLabel">EPC $ x Watt</span>
+                  <span className="epcHeroValue">${epcCalculado.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                </div>
+                <div className="comisionHero">
+                  <span className="epcHeroLabel">Comisión</span>
+                  <span className="epcHeroValue">${comisionFinal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </div>
               </div>
 
