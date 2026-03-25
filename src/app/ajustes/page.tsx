@@ -103,7 +103,6 @@ export default function Home() {
 
   const comisionFinal = (montoComisionable * commissionRateDecimal) +
     (battCommable === 500 ? 500 : 0) +
-    (battCommable === 1000 ? 1000 : 0) +
     (battCommable === 1000 ? 1000 : 0);
 
   const epcCalculado = epcTotalBase > 0 ? ventaTotal / epcTotalBase : 0;
@@ -213,7 +212,7 @@ export default function Home() {
                 </label>
                 <label className="checkboxLabel">
                   <input type="checkbox" checked={adder1} onChange={handleCheck1} />
-                  <div className="customCheck">Lowfico, Cablería, Tubo...</div>
+                  <div className="customCheck">Lowfico</div>
                 </label>
                 <label className="checkboxLabel" style={{ display: 'none' }}>
                   <input type="checkbox" checked={adder3} onChange={handleCheck3} />
@@ -280,7 +279,7 @@ export default function Home() {
               <div className="heroGrid">
                 <div className="epcHero">
                   <span className="epcHeroLabel">EPC $ x Watt</span>
-                  <span className="epcHeroValue">${epcCalculado.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  <span className="epcHeroValue">${epcCalculado.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 })}</span>
                 </div>
                 <div className="comisionHero">
                   <span className="epcHeroLabel">Comisión</span>
