@@ -87,6 +87,8 @@ export default function Home() {
       comisionBateria === "Flat fee $500" ? 500 : 0;
 
 
+  const numExpansion = añadirExpansion === "" ? 0 : parseInt(añadirExpansion);
+
   const ventaExpansionEfectiva =
     añadirExpansion === "" ? 0 :
       añadirExpansion === "1" ? ventaExpansion :
@@ -96,14 +98,14 @@ export default function Home() {
 
   const ventaTotal = ventaPV + ventaBateria + ventaExpansionEfectiva + sumAdders;
 
-  const montoComisionable = ventaPV + ajusteComision + (battCommable > 1000 ? ventaBateria : 0) + ventaExpansionEfectiva;
+  const montoComisionable = ventaPV + ajusteComision + (battCommable > 1000 ? ventaBateria + ventaExpansionEfectiva : 0);
 
   const commissionRatePercent = rangos.find(r => r.id === idVendedor)?.porcentaje || 0;
   const commissionRateDecimal = commissionRatePercent / 100;
 
   const comisionFinal = (montoComisionable * commissionRateDecimal) +
-    (battCommable === 500 ? 500 : 0) +
-    (battCommable === 1000 ? 1000 : 0);
+    (battCommable === 500 ? 500 * (1 + numExpansion) : 0) +
+    (battCommable === 1000 ? 1000 * (1 + numExpansion) : 0);
 
   const epcCalculado = epcTotalBase > 0 ? ventaTotal / epcTotalBase : 0;
 
